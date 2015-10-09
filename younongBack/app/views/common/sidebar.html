@@ -1,0 +1,73 @@
+<!-- BEGIN SIDEBAR -->
+<div class="page-sidebar nav-collapse collapse">
+
+    <!-- BEGIN SIDEBAR MENU -->
+    <ul class="page-sidebar-menu">
+
+        <li>
+
+            <!-- BEGIN RESPONSIVE QUICK SEARCH FORM -->
+            <form class="sidebar-search" style="display: none">
+                <div class="input-box">
+                    <a href="javascript:;" class="remove"></a>
+                    <input type="text" placeholder="Search..."/>
+                    <input type="button" class="submit" value=" "/>
+                </div>
+            </form>
+            <!-- END RESPONSIVE QUICK SEARCH FORM -->
+
+        </li>
+
+        <li class="start " style="display: none;">
+            <a ui-sref="home.index">
+                <i class="icon-home"></i>
+                <span class="title">首页</span>
+            </a>
+        </li>
+        <li class="start " style="margin-top: 20px" >
+            <a ui-sref="home.product({page:1})">
+                <i class="icon-home"></i>
+                <span class="title">商品管理</span>
+            </a>
+        </li>
+        <li class="">
+            <a ui-sref="home.activity({page:1})">
+                <i class="icon-home"></i>
+                <span class="title">活动管理</span>
+            </a>
+        </li>
+        <li class="">
+            <a ui-sref="home.order({page:1})">
+                <i class="icon-home"></i>
+                <span class="title">订单管理</span>
+            </a>
+        </li>
+        <li class="">
+            <a ui-sref="home.deliverySite">
+                <i class="icon-home"></i>
+                <span class="title">配送点管理</span>
+            </a>
+        </li>
+        <li class="">
+            <a ui-sref="home.saleCount">
+                <i class="icon-home"></i>
+                <span class="title">销售统计</span>
+            </a>
+        </li>
+        <li class="last ">
+            <a ui-sref="home.coupons">
+                <i class="icon-home"></i>
+                <span class="title">优惠券管理</span>
+            </a>
+        </li>
+        <li class="last " style="display: none">
+            <a ui-sref="home.setting">
+                <i class="icon-bar-chart"></i>
+                <span class="title">系统设置</span>
+            </a>
+        </li>
+
+    </ul>
+    <!-- END SIDEBAR MENU -->
+</div>
+<!-- END SIDEBAR -->
