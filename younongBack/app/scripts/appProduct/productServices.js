@@ -6,5 +6,7 @@ define(['common/services'],
     function (services) {
         services.factory('ProductService', function ($http) {
 
+
+
         });
     });
