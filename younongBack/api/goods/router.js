@@ -20,6 +20,18 @@ function getGoods(req, res){
 
 }
 
+// 获取商品详细信息
+function getGoodsInformation(req,res){
+    var prod_id = req.params.prod_id;
+    goodsDao.getGoodsInformation(prod_id,function(err,data){
+            if(err){
+                return res.json(500,err);
+            }
+            return res.json(200, data);
+        }
+    );
+}
+
 // 添加商品
 function addGoods(req,res){
     var goods=req.body;
@@ -47,11 +59,26 @@ function upload(req, res){
 
 }
 
+//修改商品信息
+function updateGoods(req,res){
+    var goods=req.body;
+    goodsDao.updateGoods(goods,function(err,data){
+            if(err){
+                return res.json(500,err);
+            }
+            return res.json(200, data);
+        }
+    );
+
+}
+
 
 
 
 router.get("/getGoods/:page/:size", getGoods); // 获取商品
+router.get("/getGoodsInformation/:prod_id", getGoodsInformation); //获取商品详细信息
 router.post("/addGoods", addGoods); // 添加商品
 router.post("/upload", upload); // 添加商品图片
+router.post("/updateGoods", updateGoods); //修改商品信息
 
 module.exports = router;

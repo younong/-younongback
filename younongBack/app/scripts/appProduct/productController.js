@@ -36,17 +36,15 @@ define(['common/controllers', 'appProduct/productServices', 'domReady', 'wysiwyg
             }
         ]);
 
-        controllers.controller('ProductCreateCtrl', ['$scope', 'ProductService','Upload',
-            function ($scope, ProductService,Upload) {
+        controllers.controller('ProductCreateCtrl', ['$scope', 'ProductService','Upload','$state',
+            function ($scope, ProductService,Upload,$state) {
                 $scope.pageTitle = '新增商品';
                 $scope.subPageTitle = '新增';
                 $scope.covers = [];
                 $scope.productForm = {
 
                 };
-                $scope.$watch('covers', function () {
-                    console.log($scope.covers);
-                });
+
                 $scope.remove = function () {
                     $scope.covers = [];
                 };
@@ -128,11 +126,134 @@ define(['common/controllers', 'appProduct/productServices', 'domReady', 'wysiwyg
                     });
                 }
 
+            }
+        ]);
 
 
+        controllers.controller('ProductDetailCtrl', ['$scope', 'ProductService','Upload','$stateParams','$state',
+            function ($scope, ProductService,Upload,$stateParams,$state) {
+
+                $scope.pageTitle = '商品详情';
+                $scope.subPageTitle = '商品详情';
+                $scope.covers = [];
+                $scope.productForm = {};
+
+
+                $scope.isDetail = 1;
+                $scope.update = function () {
+                    $scope.isUpdate = 1;
+                };
+                $scope.cancel = function () {
+                    $scope.isUpdate = 0;
+                };
+
+                ProductService.getGoodsInformation($stateParams.prod_id,function(err,data){
+
+                    if(err){
+                        alert('获取商品信息失败');
+                        return ;
+                    }
+                    console.log(data);
+                    $scope.productForm=data;
+                    $('#editor').html(data.prod_detail);
+                    $scope.productForm.prod_id=$stateParams.prod_id;
+
+
+                })
+
+
+                domReady(function () {
+                    $(function () {
+                        function initToolbarBootstrapBindings() {
+                            var fonts = ['Serif', 'Sans', 'Arial', 'Arial Black', 'Courier',
+                                    'Courier New', 'Comic Sans MS', 'Helvetica', 'Impact', 'Lucida Grande', 'Lucida Sans', 'Tahoma', 'Times',
+                                    'Times New Roman', 'Verdana'],
+                                fontTarget = $('[title=Font]').siblings('.dropdown-menu');
+                            $.each(fonts, function (idx, fontName) {
+                                fontTarget.append($('<li><a data-edit="fontName ' + fontName + '" style="font-family:\'' + fontName + '\'">' + fontName + '</a></li>'));
+                            });
+                            $('a[title]').tooltip({container: 'body'});
+                            $('.dropdown-menu input').click(function () {
+                                return false;
+                            })
+                                .change(function () {
+                                    $(this).parent('.dropdown-menu').siblings('.dropdown-toggle').dropdown('toggle');
+                                })
+                                .keydown('esc', function () {
+                                    this.value = '';
+                                    $(this).change();
+                                });
+
+                            $('[data-role=magic-overlay]').each(function () {
+                                var overlay = $(this), target = $(overlay.data('target'));
+                                overlay.css('opacity', 0).css('position', 'absolute').offset(target.offset()).width(target.outerWidth()).height(target.outerHeight());
+                            });
+                            $('#voiceBtn').hide();
+
+                        };
+                        initToolbarBootstrapBindings();
+                        $('#editor').wysiwyg();
+                        window.prettyPrint && prettyPrint();
+                    });
+                });
+
+
+                $scope.updateProduct = function () {
+                    if ($scope.covers.length!=0) {
+
+                        var uploadCover = function (cb) {
+                            Upload.upload({
+                                url: SiteConfig.pic_host + 'api/goods/upload',
+                                file: $scope.covers[0]
+                            }).success(function (data, status, headers, config) {
+                                console.log(data);
+                                cb(data);
+
+                            });
+                        };
+
+
+                        uploadCover(function (data) {
+                            $scope.productForm.prod_images = data.path;
+                            $scope.productForm.prod_detail = $('#editor').html();
+                            $scope.productForm.prod_categoryids=1;
+                            $scope.productForm.prod_categorynames='果蔬生鲜';
+                            console.log($scope.productForm);
+//                        $scope.activityForm.activity_pic_url = data.path;
+                            ProductService.updateProduct($scope.productForm, function (error, data) {
+                                if (error) {
+                                    alert('修改商品失败'+error);
+                                    return;
+                                }
+                                $state.go('home.product', {page: 1});
+                            });
+                        });
+                    }else{
+
+                        $scope.productForm.prod_detail = $('#editor').html();
+                        $scope.productForm.prod_categoryids=1;
+                        $scope.productForm.prod_categorynames='果蔬生鲜';
+                        console.log($scope.productForm);
+                        ProductService.updateProduct($scope.productForm, function (error, data) {
+                            if (error) {
+                                alert('修改商品失败'+error);
+                                return;
+                            }
+                            $state.go('home.product', {page: 1});
+                        });
+
+                    }
+
+
+
+
+                }
 
             }
         ]);
+
+
+
 
 
 

@@ -52,7 +52,7 @@
 
                         <!-- BEGIN FORM-->
 
-                        <form ng-submit="addNewProduct()" class="form-horizontal form-bordered"  enctype="multipart/form-data" >
+                        <form ng-submit="updateProduct()" class="form-horizontal form-bordered"  enctype="multipart/form-data" >
                             <div class="control-group">
                                 <label class="control-label">商品封面</label>
 
@@ -74,7 +74,7 @@
                                     <div ng-show="isDetail && !isUpdate" class="fileupload fileupload-new" style="margin-bottom: 10px;">
                                         <div id="cover_wrap" class="fileupload-new"
                                              style="margin-bottom: 10px;padding: 10px 10px;max-width: 200px;max-height: 200px;">
-                                            <img ng-src="{{ pic_host + productForm.good_pic_url }}"
+                                            <img ng-src="{{ pic_host + productForm.prod_images }}"
                                                  style="border: 1px solid #ddd;padding: 10px 10px;">
 
                                         </div>
@@ -198,6 +198,7 @@
                                         </div>
 
                                         <div id="editor">
+
                                         </div>
                                     </div>
                                 </div>
