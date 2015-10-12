@@ -6,6 +6,26 @@ define(['common/services'],
     function (services) {
         services.factory('ProductService', function ($http) {
 
+            return {
+                getGoods:function(page,size,keyword,cb){
+                    $http.get('/api/goods/getGoods/'+page+'/'+size+"?word=" + keyword).success(function(data){
+                        cb(data);
+                    }).error(function(err){
+                        cb(err);
+                    });
+
+                },
+                addGoods:function(data,cb){
+                    $http.post('/api/goods/addGoods',data).success(function(data){
+                        cb(null,data);
+
+                    }).error(function(err){
+                        cb(err,data);
+                    });
+
+                }
+            }
+
 
 
         });
