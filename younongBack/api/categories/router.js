@@ -23,7 +23,7 @@ function addCate(req, res){
 	        console.log(err);
 	        return res.json(500, {error: err});
 	    }
-	    return res.json(200, {result: 'success'});
+	    return res.json(200, {result: data});
 	})
 }
 
@@ -43,7 +43,7 @@ function deleteCate(req, res){
 	        console.log(err);
 	        return res.json(500, {error: err});
 	    }
-	    return res.json(200, {result: 'success'});
+	    return res.json(200, {result: data});
 	})
 }
 

@@ -14,7 +14,14 @@ var user_id = 1;
 define(['common/controllers', 'domReady'],
     function (controllers, domReady) {
         controllers.controller('CategoryCtrl',function ($scope, CategoryService) {
-        	console.log("CategoryCtrl");
+        	$scope.catename = "";
+        	$scope.openAddWindow = function(){
+        		$scope.catename = "";
+        		jQuery("#myModal").modal()
+        	}
+        	$scope.addCate = function(catename){
+        		console.log(catename);
+        	}
         	CategoryService.test();
         });
     });

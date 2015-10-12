@@ -4,7 +4,11 @@
 // 商品相关服务配置文件
 define(['common/services'],
     function (services) {
-        services.factory('OrderService', function ($http) {
+        services.factory('OrderServices', function ($http) {
 
+            return{
+
+
+            }
         });
     });
