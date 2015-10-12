@@ -32,6 +32,20 @@ define(['app'], function (app) {
                         }
                     }
                 })
+                .state("home.category", {
+                    url: "/category",
+                    views: {
+                        '': {
+                            templateUrl: 'views/tplCategory/home.category.html',
+                            controller: 'CategoryCtrl'
+                        }, 'sidebar': {
+                            templateUrl: 'views/common/sidebar.html'
+                        },
+                        'footer': {
+                            templateUrl: 'views/common/footer.html'
+                        }
+                    }
+                })
                 .state("home.product", {
                     url: "/product/page/{page:[1-9]{1,4}}",
                     views: {

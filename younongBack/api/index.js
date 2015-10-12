@@ -46,6 +46,7 @@ apiModule.init = function (app) {
     app.use("/api/orders", require("./orders/router"));
     app.use("/api/goods", require("./goods/router"));
     app.use("/api/addresses",require("./addresses/router"));
+    app.use("/api/categories",require("./categories/router"));
 
 
     // FINALLY, use any error handlers
