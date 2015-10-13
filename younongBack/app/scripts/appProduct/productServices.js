@@ -37,8 +37,14 @@ define(['common/services'],
 
                     }).error(function(err){
                         cb(err,null);
-                    })
-
+                    });
+                },
+                delProduct:function(prod_id,cb){
+                    $http.get('/api/goods/delGoods/'+prod_id).success(function(data){
+                        cb(null,data);
+                    }).error(function(err){
+                        cb(err,null);
+                    });
                 }
             }
 

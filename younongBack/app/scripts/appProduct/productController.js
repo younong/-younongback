@@ -33,6 +33,22 @@ define(['common/controllers', 'appProduct/productServices', 'domReady', 'wysiwyg
                     $scope.currentPage = 1;
                     load();
                 }
+
+                $scope.delConfirm=function(index,prod_id){
+                    $scope.delProductName=$scope.products.results[index].prod_name;
+                    $scope.delIndex=index;
+                    $scope.delId=prod_id;
+                }
+
+                $scope.delgood=function(index,prod_id){
+                    ProductService.delProduct(prod_id,function(err,data){
+                        if(err){
+                            alert('删除失败')
+                        }else{
+                            $scope.products.results.splice(index);
+                        }
+                    })
+                }
             }
         ]);
 
@@ -42,17 +58,13 @@ define(['common/controllers', 'appProduct/productServices', 'domReady', 'wysiwyg
                 $scope.subPageTitle = '新增';
                 $scope.covers = [];
                 $scope.productForm = {
-
                 };
-
                 $scope.remove = function () {
                     $scope.covers = [];
                 };
                 // 图片预览
                 $scope.isCreate = 1;
-//                $scope.products = [];
                 $scope.backTo = function () {
-                    //$state.go('home.product({page:1})');
                     $state.go('home.product', {page: 1});
                 }
                 domReady(function () {
@@ -89,16 +101,12 @@ define(['common/controllers', 'appProduct/productServices', 'domReady', 'wysiwyg
                         window.prettyPrint && prettyPrint();
                     });
                 });
-
-
                 $scope.addNewProduct = function () {
-
                     if (!$scope.covers || !$scope.covers.length) {
                         $scope.notifyContent = '商品必须上传图片！';
                         $('#notifyModal').modal();
                         return;
                     }
-
                     var uploadCover = function (cb) {
                         Upload.upload({
                             url: SiteConfig.pic_host + 'api/goods/upload',
@@ -114,8 +122,6 @@ define(['common/controllers', 'appProduct/productServices', 'domReady', 'wysiwyg
                         $scope.productForm.prod_detail = $('#editor').html();
                         $scope.productForm.prod_categoryids=1;
                         $scope.productForm.prod_categorynames='果蔬生鲜';
-                        console.log($scope.productForm);
-//                        $scope.activityForm.activity_pic_url = data.path;
                         ProductService.addGoods($scope.productForm, function (error, data) {
                             if (error) {
                                 alert('新增商品失败'+error);
@@ -125,7 +131,6 @@ define(['common/controllers', 'appProduct/productServices', 'domReady', 'wysiwyg
                         });
                     });
                 }
-
             }
         ]);
 
@@ -137,8 +142,6 @@ define(['common/controllers', 'appProduct/productServices', 'domReady', 'wysiwyg
                 $scope.subPageTitle = '商品详情';
                 $scope.covers = [];
                 $scope.productForm = {};
-
-
                 $scope.isDetail = 1;
                 $scope.update = function () {
                     $scope.isUpdate = 1;
@@ -148,19 +151,14 @@ define(['common/controllers', 'appProduct/productServices', 'domReady', 'wysiwyg
                 };
 
                 ProductService.getGoodsInformation($stateParams.prod_id,function(err,data){
-
                     if(err){
                         alert('获取商品信息失败');
                         return ;
                     }
-                    console.log(data);
                     $scope.productForm=data;
                     $('#editor').html(data.prod_detail);
                     $scope.productForm.prod_id=$stateParams.prod_id;
-
-
                 })
-
 
                 domReady(function () {
                     $(function () {
@@ -200,7 +198,6 @@ define(['common/controllers', 'appProduct/productServices', 'domReady', 'wysiwyg
 
                 $scope.updateProduct = function () {
                     if ($scope.covers.length!=0) {
-
                         var uploadCover = function (cb) {
                             Upload.upload({
                                 url: SiteConfig.pic_host + 'api/goods/upload',
@@ -208,11 +205,8 @@ define(['common/controllers', 'appProduct/productServices', 'domReady', 'wysiwyg
                             }).success(function (data, status, headers, config) {
                                 console.log(data);
                                 cb(data);
-
                             });
                         };
-
-
                         uploadCover(function (data) {
                             $scope.productForm.prod_images = data.path;
                             $scope.productForm.prod_detail = $('#editor').html();
@@ -229,7 +223,6 @@ define(['common/controllers', 'appProduct/productServices', 'domReady', 'wysiwyg
                             });
                         });
                     }else{
-
                         $scope.productForm.prod_detail = $('#editor').html();
                         $scope.productForm.prod_categoryids=1;
                         $scope.productForm.prod_categorynames='果蔬生鲜';
@@ -241,20 +234,9 @@ define(['common/controllers', 'appProduct/productServices', 'domReady', 'wysiwyg
                             }
                             $state.go('home.product', {page: 1});
                         });
-
                     }
-
-
-
-
                 }
-
             }
         ]);
-
-
-
-
-
 
     });
