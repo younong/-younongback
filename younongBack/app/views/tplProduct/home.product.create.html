@@ -52,7 +52,7 @@
 
                         <!-- BEGIN FORM-->
 
-                        <form ng-submit="updateProduct()" class="form-horizontal form-bordered"  enctype="multipart/form-data" >
+                        <form ng-submit="addNewProduct()" class="form-horizontal form-bordered"  enctype="multipart/form-data" >
                             <div class="control-group">
                                 <label class="control-label">商品封面</label>
 
@@ -125,8 +125,19 @@
                                 <label class="control-label">商品种类</label>
 
                                 <div class="controls">
-                                    <input type="text" class="m-wrap span12" placeholder="选择种类"
-                                           ng-model="productForm.prod_categorynames" required>
+
+
+
+
+                                    <div class="checkbox"  style="margin-left: 20px !important;width: 110px;" ng-repeat="item in categories.data">
+                                        <label>
+                                            <input type="checkbox" value="{{item.categories_id}}" name="category"> {{item.category_name}}
+                                        </label>
+                                    </div>
+
+
+                                    <!--<input type="text" class="m-wrap span12" placeholder="选择种类"-->
+                                           <!--ng-model="productForm.prod_categorynames" required>-->
                                 </div>
                             </div>
 

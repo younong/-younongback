@@ -69,14 +69,28 @@ function updateGoods(req,res){
             return res.json(200, data);
         }
     );
+}
+
+//删除商品
+
+function delGoods(req,res){
+    var prod_id = req.params.prod_id;
+    goodsDao.delGoods(prod_id,function(err,data){
+        if(err){
+            return res.json(500,err);
+        }
+        return res.json(200, data);
+
+    });
+
+
 
 }
 
 
-
-
 router.get("/getGoods/:page/:size", getGoods); // 获取商品
 router.get("/getGoodsInformation/:prod_id", getGoodsInformation); //获取商品详细信息
+router.get("/delGoods/:prod_id", delGoods); //删除商品
 router.post("/addGoods", addGoods); // 添加商品
 router.post("/upload", upload); // 添加商品图片
 router.post("/updateGoods", updateGoods); //修改商品信息

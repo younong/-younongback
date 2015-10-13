@@ -136,10 +136,21 @@ goodsDao.updateGoods=function(data,cb){
         }
         return cb(null,result);
     });
+}
 
 
+/**
+ * 删除商品
+ */
 
-
+goodsDao.delGoods=function(prod_id,cb){
+    var sql = "update products set prod_status=5 where prod_id=?";
+    sqlClient.query(sql,prod_id, function(err, result){
+        if(err){
+            return cb(err, null);
+        }
+        return cb(null,result);
+    });
 }
 
 
