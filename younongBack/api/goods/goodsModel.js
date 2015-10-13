@@ -3,6 +3,7 @@
  */
 var sqlClient = require('../lib/mysql/mysql');
 var goodsDao = module.exports;
+var moment = require('moment');
 var Config = require('../config');
 
 
@@ -36,6 +37,25 @@ goodsDao.getGoods = function (page,size,keyword,cb) {
 };
 
 /**
+ * 获取商品详细信息
+ */
+
+goodsDao.getGoodsInformation=function(prod_id,cb){
+
+    var sql = "select prod_name,prod_desc,prod_images,prod_origin,prod_flag,prod_categoryids,prod_categorynames" +
+        ",prod_status,prod_detail,prod_price from products where prod_id =  " + prod_id;
+
+    sqlClient.query(sql,null, function(err, result){
+        if(err){
+            return cb(err, null);
+        }
+        return cb(null,result[0]);
+    });
+
+
+}
+
+/**
  * 获取有效商品总数量接口
  */
 
@@ -66,10 +86,10 @@ goodsDao.getGoodsCount = function (key,data,cb) {
 goodsDao.addGoods = function (data,cb) {
 
     var sql = "insert into products(prod_name,prod_desc,prod_images,prod_origin,prod_flag,prod_categoryids,prod_categorynames" +
-        ",prod_status,prod_detail,prod_price) values(?,?,?,?,1,?,?,4,?,?)";
+        ",prod_status,prod_detail,prod_price,prod_createtime) values(?,?,?,?,1,?,?,4,?,?,?)";
 
     sqlClient.query(sql,[data.prod_name,data.prod_desc,data.prod_images,data.prod_origin,data.prod_categoryids,
-        data.prod_categorynames,data.prod_detail,data.prod_price], function(err, result){
+        data.prod_categorynames,data.prod_detail,data.prod_price,moment().format('YYYY-MM-DD HH:mm:ss')], function(err, result){
         if(err){
             return cb(err, null);
         }
@@ -78,10 +98,10 @@ goodsDao.addGoods = function (data,cb) {
     });
 };
 
+
 /**
  * 商品图片接口
  */
-
 
 goodsDao.create = function (file, cb) {
 
@@ -100,6 +120,26 @@ goodsDao.create = function (file, cb) {
 
 };
 
+/**
+ * 修改商品信息
+ */
 
+goodsDao.updateGoods=function(data,cb){
+
+    var sql = "update products set prod_name=?,prod_desc=?,prod_images=?,prod_origin=?,prod_categoryids=?," +
+        "prod_categorynames=?,prod_detail=?,prod_price=?,prod_updatetime=? where prod_id=?";
+
+    sqlClient.query(sql,[data.prod_name,data.prod_desc,data.prod_images,data.prod_origin,data.prod_categoryids,
+        data.prod_categorynames,data.prod_detail,data.prod_price,moment().format('YYYY-MM-DD HH:mm:ss'),data.prod_id], function(err, result){
+        if(err){
+            return cb(err, null);
+        }
+        return cb(null,result);
+    });
+
+
+
+
+}
 
 

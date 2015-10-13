@@ -20,8 +20,24 @@ define(['common/services'],
                         cb(null,data);
 
                     }).error(function(err){
-                        cb(err,data);
+                        cb(err,null);
                     });
+                },
+                getGoodsInformation:function(prod_id,cb){
+                    $http.get('/api/goods/getGoodsInformation/'+prod_id).success(function(data){
+                        cb(null,data);
+
+                    }).error(function(err){
+                        cb(err,null);
+                    })
+                },
+                updateProduct:function(goods,cb){
+                    $http.post('/api/goods/updateGoods',goods).success(function(data){
+                        cb(null,data)
+
+                    }).error(function(err){
+                        cb(err,null);
+                    })
 
                 }
             }

@@ -75,8 +75,6 @@ require([
     'datepicker-locale',
     'datepicker',
         'datepicker-locale',
-    'appAddresses/addressServices',
-    'appAddresses/addressController',
     'appAuth/authService',
     'multiselect',
     'config'

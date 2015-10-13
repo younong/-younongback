@@ -98,7 +98,7 @@
                         <tbody role="alert" aria-live="polite" aria-relevant="all">
                         <tr class="gradeX odd" ng-repeat="item in products.results"
                             ng-class="{'odd':$odd,'even':$even}">
-                            <td class=" "><a ui-sref="home.productDetail({good_Id:item.prod_id})">{{item.prod_name}}</a></td>
+                            <td class=" "><a ui-sref="home.productDetail({prod_id:item.prod_id})">{{item.prod_name}}</a></td>
                             <td class="hidden-480 ">{{item.prod_categorynames}}</td>
                             <td class="center hidden-480 ">{{item.prod_desc}}</td>
                             <td class="">

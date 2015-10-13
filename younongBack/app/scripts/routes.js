@@ -21,9 +21,10 @@ define(['app'], function (app) {
                 .state("home.index", {
                     url: '',
                     views: {
-//                        '': {
-//                            templateUrl: 'views/tplIndex.html'
-//                        },
+                        '': {
+                            templateUrl: 'views/tplProduct/home.product.html',
+                            controller: 'ProductCtrl'
+                        },
                         'sidebar': {
                             templateUrl: 'views/common/sidebar.html'
                         },
@@ -75,7 +76,7 @@ define(['app'], function (app) {
                     }
                 })
                 .state("home.productDetail", {
-                    url: "/product/detail/{good_Id:[0-9]{1,4}}",
+                    url: "/product/detail/{prod_id:[0-9]{1,4}}",
                     views: {
                         '': {
                             templateUrl: 'views/tplProduct/home.product.create.html',
