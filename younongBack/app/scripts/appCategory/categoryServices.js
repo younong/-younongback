@@ -6,12 +6,15 @@ define(['common/services'],
     function (services) {
         services.factory('CategoryService', function ($http) {
         	var catesObj = {data:[]};
+        	
+        	load();
+
         	/**
 			 * @desc 一次加载分类信息
         	 */ 
         	function load(){
         		$http.get('/api/categories/find').success(function(data){
-        			catesObj.data = data;
+        			catesObj.data = data.result;
         		}).error(function(err){
         			console.log("分类信息加载出错",err);
         		})
@@ -29,10 +32,11 @@ define(['common/services'],
 				 * @desc 添加分类信息
 	        	 */
 	        	addCate:function(catename, suc, err){
-	        		$http.get('/api/categories/find?catename='+catename).success(function(data){
-	        			catesObj.unshift({
+	        		$http.get('/api/categories/add?catename='+catename).success(function(data){
+	        			debugger;
+	        			catesObj.data.unshift({
 	        				category_name:catename,
-	        				categories_id:data.insertId
+	        				categories_id:data.result.insertId
 	        			});
 	        			suc&&suc();
 	        		}).error(function(err){
@@ -45,17 +49,19 @@ define(['common/services'],
 	        	 */
 	        	deleteCate:function(cateid, suc, err){
 	        		$http.get('/api/categories/delete?cateid='+cateid).success(function(data){
-	        			
+	        			for(index in catesObj.data){
+	        				var cate = catesObj.data[index];
+	        				if(cate.categories_id === cateid){
+	        					catesObj.data.splice(index, 1);
+	        					return;
+	        				}
+	        			}
+	        			catesObj.data.splice(index,1);
 	        			suc&&suc();
 	        		}).error(function(err){
 	        			err&&err();
 	        		})
-	        	},
-
-
-        		test:function(){
-        		 	console.log("cateserver");
-        		}
+	        	}
         	}
         });
     });

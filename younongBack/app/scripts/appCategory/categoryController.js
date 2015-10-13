@@ -15,13 +15,37 @@ define(['common/controllers', 'domReady'],
     function (controllers, domReady) {
         controllers.controller('CategoryCtrl',function ($scope, CategoryService) {
         	$scope.catename = "";
+
+        	$scope.catesObj = CategoryService.getCatesObj();
+
+
         	$scope.openAddWindow = function(){
         		$scope.catename = "";
-        		jQuery("#myModal").modal()
+        		jQuery("#addCateModal").modal();
         	}
-        	$scope.addCate = function(catename){
-        		console.log(catename);
+        	$scope.addCate = function(catename){        		
+        		if(catename === ''){
+        			return;
+        		}
+        		CategoryService.addCate(catename,suc,err);
+        		function suc(){
+        			jQuery('#addCateModal').modal('hide');
+        			console.log("添加成功");
+        		}
+        		function err(){
+        			console.log("添加失败");
+        		}
         	}
-        	CategoryService.test();
+        	$scope.deleteCate = function(cateid){
+        		console.log("删除");
+
+        		CategoryService.deleteCate(cateid,suc,err);
+        		function suc(){
+        			console.log("删除成功");
+        		}
+        		function err(){
+        			console.log("删除失败");
+        		}
+        	}
         });
     });

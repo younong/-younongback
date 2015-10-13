@@ -66,27 +66,24 @@
                                         <th class="hidden-480 sorting_disabled" role="columnheader" rowspan="1" colspan="1" aria-label="Email">
                                             分类名称
                                         </th>
-                                        <th class="hidden-480 sorting" role="columnheader" tabindex="0" aria-controls="sample_1" rowspan="1" colspan="1" aria-label="Points: activate to sort column ascending">
-                                            分类描述
-                                        </th>
                                         <th class="sorting_disabled" role="columnheader" rowspan="1" colspan="1" aria-label="" style="width: 80px;text-align: center;">操作
+
                                         </th>
                                     </tr>
                                 </thead>
                                 <tbody role="alert" aria-live="polite" aria-relevant="all">
-                                    <tr class="gradeX odd" ng-repeat="item in goods" ng-class="{'odd':$odd,'even':$even}">
+                                    <tr class="gradeX odd" ng-repeat="cate in catesObj.data" ng-class="{'odd':$odd,'even':$even}">
                                         <!--<td class=" sorting_1">-->
                                         <!--<div class="checker"><span><input type="checkbox" class="checkboxes" value="1"></span>-->
                                         <!--</div>-->
                                         <!--</td>-->
-                                        <td class=" "><a ui-sref="home.productDetail({good_Id:item.id})">{{item.name}}</a></td>
-                                        <td class="hidden-480 ">{{item.good_desc}}</td>
-                                        <td class="center hidden-480 ">{{item.origin}}</td>
+                                        <td class=" ">{{cate.categories_id}}</td>
+                                        <td class="hidden-480 ">{{cate.category_name}}</td>
                                         <!--<td class="center hidden-480 ">{{item.price}}</td>-->
                                         <!--<td class="center hidden-480 ">满{{item.activity_condition}}人开团</td>-->
                                         <!--<td class="center hidden-480 ">{{item.created_time}}</td>-->
                                         <td class="">
-                                            <a ui-sref="home.productDetail({good_Id:item.id})">编辑</a>
+                                            <button class="btn red pull-right" ng-click='deleteCate(cate.categories_id)'>删除</button>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -101,7 +98,7 @@
     </div>
     <!-- END PAGE -->
 </div>
-<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal fade" id="addCateModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
@@ -120,7 +117,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                <button type="button" class="btn btn-primary" ng-click="addCate(catename)" data-dismiss="modal">添加</button>
+                <button type="button" class="btn btn-primary" ng-click="addCate(catename)">添加</button>
             </div>
         </div>
     </div>
