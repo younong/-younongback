@@ -52,13 +52,15 @@ define(['common/controllers', 'appProduct/productServices', 'domReady', 'wysiwyg
             }
         ]);
 
-        controllers.controller('ProductCreateCtrl', ['$scope', 'ProductService','Upload','$state',
-            function ($scope, ProductService,Upload,$state) {
+        controllers.controller('ProductCreateCtrl', ['$scope', 'ProductService','Upload','$state','CategoryService',
+            function ($scope, ProductService,Upload,$state,CategoryService) {
                 $scope.pageTitle = '新增商品';
                 $scope.subPageTitle = '新增';
                 $scope.covers = [];
                 $scope.productForm = {
                 };
+                $scope.productForm.prod_categoryids='';
+                $scope.productForm.prod_categorynames='';
                 $scope.remove = function () {
                     $scope.covers = [];
                 };
@@ -67,6 +69,9 @@ define(['common/controllers', 'appProduct/productServices', 'domReady', 'wysiwyg
                 $scope.backTo = function () {
                     $state.go('home.product', {page: 1});
                 }
+
+                $scope.categories=CategoryService.getCatesObj();
+
                 domReady(function () {
                     $(function () {
                         function initToolbarBootstrapBindings() {
@@ -102,11 +107,30 @@ define(['common/controllers', 'appProduct/productServices', 'domReady', 'wysiwyg
                     });
                 });
                 $scope.addNewProduct = function () {
+                    $('input[type="checkbox"][name="category"]:checked').each(
+                        function() {
+                            $scope.productForm.prod_categoryids+=$(this).val()+',';
+                            for(var i=0;i<$scope.categories.data.length;i++){
+                                var item=$scope.categories.data[i];
+                                if(item.categories_id==$(this).val()){
+                                    $scope.productForm.prod_categorynames+=item.category_name+',';
+                                }
+                            }
+                        }
+                    );
+
                     if (!$scope.covers || !$scope.covers.length) {
                         $scope.notifyContent = '商品必须上传图片！';
                         $('#notifyModal').modal();
                         return;
                     }
+
+                    if ($scope.productForm.prod_categorynames=='') {
+                        $scope.notifyContent = '请选择商品种类！';
+                        $('#notifyModal').modal();
+                        return;
+                    }
+
                     var uploadCover = function (cb) {
                         Upload.upload({
                             url: SiteConfig.pic_host + 'api/goods/upload',
@@ -135,9 +159,8 @@ define(['common/controllers', 'appProduct/productServices', 'domReady', 'wysiwyg
         ]);
 
 
-        controllers.controller('ProductDetailCtrl', ['$scope', 'ProductService','Upload','$stateParams','$state',
-            function ($scope, ProductService,Upload,$stateParams,$state) {
-
+        controllers.controller('ProductDetailCtrl', ['$scope', 'ProductService','Upload','$stateParams','$state','CategoryService',
+            function ($scope, ProductService,Upload,$stateParams,$state,CategoryService) {
                 $scope.pageTitle = '商品详情';
                 $scope.subPageTitle = '商品详情';
                 $scope.covers = [];
@@ -150,16 +173,33 @@ define(['common/controllers', 'appProduct/productServices', 'domReady', 'wysiwyg
                     $scope.isUpdate = 0;
                 };
 
+                $scope.categories=CategoryService.getCatesObj();
+
                 ProductService.getGoodsInformation($stateParams.prod_id,function(err,data){
                     if(err){
                         alert('获取商品信息失败');
                         return ;
                     }
                     $scope.productForm=data;
+                    var categoryArr=data.prod_categoryids.split(',');
+                    for(var i=0;i<categoryArr.length;i++){
+                        var item=categoryArr[i];
+                        $('input[type="checkbox"][name="category"]').each(
+                            function() {
+
+                                if(item==$(this).val()){
+                                    $(this).attr("checked",'true');
+                                }
+                            }
+                        );
+                    }
+
+
+
+
                     $('#editor').html(data.prod_detail);
                     $scope.productForm.prod_id=$stateParams.prod_id;
                 })
-
                 domReady(function () {
                     $(function () {
                         function initToolbarBootstrapBindings() {
@@ -187,7 +227,6 @@ define(['common/controllers', 'appProduct/productServices', 'domReady', 'wysiwyg
                                 overlay.css('opacity', 0).css('position', 'absolute').offset(target.offset()).width(target.outerWidth()).height(target.outerHeight());
                             });
                             $('#voiceBtn').hide();
-
                         };
                         initToolbarBootstrapBindings();
                         $('#editor').wysiwyg();
@@ -195,8 +234,31 @@ define(['common/controllers', 'appProduct/productServices', 'domReady', 'wysiwyg
                     });
                 });
 
+                $scope.addNewProduct = function () {
+                    $scope.productForm.prod_categoryids='';
+                    $scope.productForm.prod_categorynames='';
 
-                $scope.updateProduct = function () {
+                    $('input[type="checkbox"][name="category"]:checked').each(
+                        function() {
+                            $scope.productForm.prod_categoryids+=$(this).val()+',';
+
+                            for(var i=0;i<$scope.categories.data.length;i++){
+                                var item=$scope.categories.data[i];
+                                if(item.categories_id==$(this).val()){
+                                    $scope.productForm.prod_categorynames+=item.category_name+',';
+                                }
+                            }
+                        }
+                    );
+
+
+                    if ($scope.productForm.prod_categorynames=='') {
+                        $scope.notifyContent = '请选择商品种类！';
+                        $('#notifyModal').modal();
+                        return;
+                    }
+
+
                     if ($scope.covers.length!=0) {
                         var uploadCover = function (cb) {
                             Upload.upload({
@@ -210,10 +272,7 @@ define(['common/controllers', 'appProduct/productServices', 'domReady', 'wysiwyg
                         uploadCover(function (data) {
                             $scope.productForm.prod_images = data.path;
                             $scope.productForm.prod_detail = $('#editor').html();
-                            $scope.productForm.prod_categoryids=1;
-                            $scope.productForm.prod_categorynames='果蔬生鲜';
                             console.log($scope.productForm);
-//                        $scope.activityForm.activity_pic_url = data.path;
                             ProductService.updateProduct($scope.productForm, function (error, data) {
                                 if (error) {
                                     alert('修改商品失败'+error);
@@ -224,9 +283,6 @@ define(['common/controllers', 'appProduct/productServices', 'domReady', 'wysiwyg
                         });
                     }else{
                         $scope.productForm.prod_detail = $('#editor').html();
-                        $scope.productForm.prod_categoryids=1;
-                        $scope.productForm.prod_categorynames='果蔬生鲜';
-                        console.log($scope.productForm);
                         ProductService.updateProduct($scope.productForm, function (error, data) {
                             if (error) {
                                 alert('修改商品失败'+error);
