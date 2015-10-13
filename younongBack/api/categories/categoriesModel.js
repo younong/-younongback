@@ -33,7 +33,6 @@ categories.find = function(cb){
         if(err){
             return  cb&&cb(err, null);
         }
-        console.log('xjc',data);
         return cb&&cb(null, data);
     })
 }

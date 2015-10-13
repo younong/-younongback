@@ -5,7 +5,6 @@
 var cateDao = require("./categoriesModel");
 var log = require("bole")("users/router");
 var router = require("express").Router();
-var utils = require('../lib/utils');
 
 /**
  * @desc 增加一个品类
