@@ -19,7 +19,7 @@ orders.findByCondition = function(condition, page, size, cb){
 		'receiver_name', // 收货人姓名
 		'deliver_phone', // 收货人电话
 		'deliver_address', // 收货地址
-		'order_status', // 订单状态
+		'order_status.status_name', // 订单状态
 		'orders.order_status_id', // 订单状态
 		'payment_methods.payment_type', // 付款方式
 		'date_purchased'  // 下单时间
@@ -54,8 +54,10 @@ orders.findByCondition = function(condition, page, size, cb){
 	// 拼接字符串
 	sql += sqlSelect+sqlFrom+sqlJoin+sqlCondition+' limit ?,?';
 	
-	// cb && cb(null, sql);
-
+	// page容错
+	if (page == 0) {
+        page = 1;
+    }
 	// 查询并返回结果
 	SqlClient.query(sql,[parseInt((page - 1) * size), parseInt(size)],function(err, data){
         if(err){
@@ -184,14 +186,30 @@ orders.updateOrderStatusId = function(orderids, statusid, cb){
         return cb&&cb(null, data);
     })
 }
+
 /**
  * @desc 修改订单配送状态状态
  */
- orders.updateDeliverStatus = function(orderids, status, cb){
+orders.updateDeliverStatus = function(orderids, status, cb){
  	var sql = 'update orders set deliver_status = ? where order_id in ('+orderids.join(',')+')';
 
 	// 查询并返回结果
 	SqlClient.query(sql,[status],function(err, data){
+        if(err){
+            return  cb&&cb(err, null);
+        }
+        return cb&&cb(null, data);
+    })
+ }
+
+/**
+ * @desc 获取订单状态的属性
+ */
+ orders.getOrderStatus = function(cb){
+ 	var sql = 'select * from order_status';
+ 	
+ 	// 查询并返回结果
+	SqlClient.query(sql,function(err, data){
         if(err){
             return  cb&&cb(err, null);
         }

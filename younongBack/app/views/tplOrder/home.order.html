@@ -53,7 +53,7 @@
                             <!--<i class="icon-cogs"></i> 工具-->
                         <!--</a>-->
 
-                        <button ng-click="sendThisPage()" class="btn blue">勾选项发货</button>
+                        <button ng-click="deliverBatch()" class="btn blue">勾选项发货</button>
                         <button ng-click="exportExcel()" class="btn blue" style="margin-left: 20px">订单导出Excel</button>
 
                     </div>
@@ -82,7 +82,7 @@
                         </div>
                         <div style="float: left;margin-left: 50px">结束时间：
                             <div class="input-append date form_datetime">
-                                <input type="text" class="m-wrap span12" data-date-format="yyyy-mm-dd" ng-model="conditionParam.dateEnd" id="dpEnd" >
+                                <input type="text" class="m-wrap span12" data-date-format="yyyy-mm-dd" ng-model="conditionParams.dateEnd" id="dpEnd" >
                                 <span class="add-on"><i class="icon-calendar"></i></span>
                             </div>
                             <!--<input type="text" onClick="WdatePicker({onpicked: function(){$(this).trigger('input')}})" style="width: 150px;" class="abc input-default" ng-model="findForm.endTime" />-->
@@ -95,8 +95,8 @@
                         </select></div> -->
                         <div style="float: left;margin-left: 50px;">订单状态：<select
                                 style=" background-color: transparent; border: 1px solid #dddddd;width: 150px; "
-                                ng-model="conditionParam.orderStatusId"
-                                ng-options="o.id as o.status for o in statuses">
+                                ng-model="conditionParams.orderStatusId"
+                                ng-options="o.order_status_id as o.status_name for o in orderStatusOptions">
                         </select></div>
                         <button ng-click="loadByCondition()" class="btn green" type="submit" style="float: left;margin-left: 30px;"><strong>按条件筛选</strong></button>
                         <!--<button type="submit" class="btn btn-primary" style="float: left;margin-left: 30px;">按条件筛选</button>-->
@@ -112,13 +112,13 @@
                                 colspan="1" aria-label="" ><!--全选-->
                                 <!--<div class="checker">-->
                         <!--<span>-->
-                            <input type="checkbox" ng-model="chkall" ng-click="chkAll(chkall)" class="group-checkable" style="width: 18px;height: 18px">
+                            <input type="checkbox" ng-model="allChecked" ng-click="chkAll(allChecked)" class="group-checkable" style="width: 18px;height: 18px">
                         <!--</span>-->
                                 <!--</div>-->
                             </th>
                             <th class="sorting" role="columnheader" tabindex="0" aria-controls="sample_1" rowspan="1"
                                 colspan="1" aria-label="Username: activate to sort column ascending"
-                                style="width: 153px;">订单编号
+                                style="width: 100px;">订单编号
                             </th>
                             <th class="hidden-480 sorting" role="columnheader" tabindex="0"
                                 aria-controls="sample_1" rowspan="1" colspan="1"
@@ -132,14 +132,14 @@
                                 aria-label="Joined">收货地址
                             </th>
                             <th class="hidden-480 sorting_disabled" role="columnheader" rowspan="1" colspan="1"
-                                aria-label="Joined">订单状态</th>
+                                aria-label="Joined" style="width:100px;">订单状态</th>
                             <th class="hidden-480 sorting_disabled" role="columnheader" rowspan="1" colspan="1"
-                                aria-label="Joined">付款方式</th>
+                                aria-label="Joined" style="width:78px;">付款方式</th>
                             <!--</th>-->
                             <th class="hidden-480 sorting_disabled" role="columnheader" rowspan="1" colspan="1"
-                                aria-label="Joined">下单时间</th>
+                                aria-label="Joined" style="width:90px">下单时间</th>
                             <th class="hidden-480 sorting_disabled" role="columnheader" rowspan="1" colspan="1"
-                                aria-label="Joined" style="text-align: center">操作</th>
+                                aria-label="Joined" style="text-align: center;width:80px;">操作</th>
                             <!--</th>-->
                             <!--<th class="sorting_disabled" role="columnheader" rowspan="1" colspan="1"-->
                                 <!--aria-label="">管理操作-->
@@ -153,7 +153,7 @@
                         <tr class="gradeX odd" ng-repeat="item in orders"
                             ng-class="{'odd':$odd,'even':$even}">
                             <td class=" sorting_1" style="text-align: center">
-                                <input type="checkbox" class="checkboxes" ng-model="item.sipped" ng-change="check(item.order_id)" style="width: 18px;height: 18px">
+                                <input type="checkbox" class="checkboxes" ng-model="item.checked" ng-change="check(item)" style="width: 18px;height: 18px">
                             </td>
                             <td class=" "><a ui-sref="home.orderDetail({order_id:item.order_id})">{{item.order_no}}</a></td>
 
@@ -161,11 +161,11 @@
 
                             <td class="center hidden-480 ">{{item.deliver_phone}}</td>
                             <td class="center hidden-480 ">{{item.deliver_address}}</td>
-                            <td class="center hidden-480 ">{{item.order_status}}</td>
+                            <td class="center hidden-480 ">{{item.status_name}}</td>
                             <td class="center hidden-480 ">{{item.payment_type}}</td>
-                            <td class="center hidden-480 ">{{item.date_purchased | date:"yyyy-mm-dd"}}</td>
+                            <td class="center hidden-480 ">{{item.date_purchased | date:"yyyy-MM-dd"}}</td>
                             <td style="text-align: center">
-                                <a class="btn mini blue" ng-click="sendGood(item.order_id)" ng-show=" item.order_status_id < 3 || item.order_status_id == 9"><i
+                                <a class="btn mini blue" ng-click="deliver(item)" ng-show=" item.order_status_id == 2 || item.order_status_id == 10"><i
                                         class="icon-share"></i> 发货</a>
                         </tr>
 
@@ -212,4 +212,22 @@
 </div>
 
 <!-- END PAGE -->
+</div>
+
+<div class="modal fade" id="orderNotifyModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
+                <h4 class="modal-title" id="notifyModalLabel">操作提醒</h4>
+            </div>
+            <div class="modal-body">
+                {{notifyContent}}
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">好的</button>
+                <!--<button type="button" class="btn btn-primary" ng-click="delivery(deliveryIndex,deliveryId)" data-dismiss="modal">确定</button>-->
+            </div>
+        </div>
+    </div>
 </div>

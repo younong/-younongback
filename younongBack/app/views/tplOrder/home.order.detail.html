@@ -55,26 +55,26 @@
                         <form ng-submit="addNewProduct()" class="form-horizontal form-bordered">
                             <div style="margin-top: 20px;margin-left: 20px;border-bottom: 1px solid #e1e1e8">
                                 <h3>收货人信息</h3>
-                                <div style="margin-top: 10px;"><span>姓名：</span>{{order.user_name}}</div>
-                                <div style="margin-top: 10px;"><span>电话：</span>{{order.user_telephone}}</div>
-                                <div style="margin-top: 10px;"><span>收货地址：</span>{{order.receive_address}}</div>
+                                <div style="margin-top: 10px;"><span>姓名：</span>{{order.receiver_name}}</div>
+                                <div style="margin-top: 10px;"><span>电话：</span>{{order.deliver_phone}}</div>
+                                <div style="margin-top: 10px;"><span>收货地址：</span>{{order.deliver_address}}</div>
                             </div>
                             <div style="margin-top: 20px;margin-left: 20px;border-bottom: 1px solid #e1e1e8">
                                 <h3>订单信息</h3>
                                 <table class="table table-bordered table-hover definewidth m10">
                                     <tr>
-                                        <th>订单编号</th><td>{{order.order_number}}</td>
+                                        <th>订单编号</th><td>{{order.order_no}}</td>
                                         <th>活动名称</th><td>{{order.activity_name}}</td>
-                                        <th>订单状态</th><td>{{order.order_status}}</td>
-                                        <th>下单时间</th><td>{{order.created_time}}</td>
-                                        <th>收货方式</th><td>{{receive_type}}</td>
+                                        <th>订单状态</th><td>{{order.status_name}}</td>
+                                        <th>下单时间</th><td>{{order.date_purchased}}</td>
+                                        <th>收货方式</th><td>{{order.deliver_type}}</td>
                                     </tr>
                                     <tr>
-                                        <th>商品数量</th><td>{{order.good_number}}</td>
-                                        <th>订单价格</th><td>{{order.good_price}}</td>
+                                        <th>商品数量</th><td>{{order.product_number}}</td>
+                                        <th>订单价格</th><td>{{order.order_total}}</td>
                                         <th>优惠券</th><td>{{order.coupon_price}}元</td>
-                                        <th>付款方式</th><td>{{order.pay_type}}</td>
-                                        <th>实付金额</th><td>{{order.total_price}}</td>
+                                        <th>付款方式</th><td>{{order.payment_type}}</td>
+                                        <th>实付金额</th><td>{{order.payment_amount}}</td>
                                     </tr>
                                 </table>
                                 <h3>商品列表</h3>
@@ -87,11 +87,11 @@
                                         <th style="text-align: center;vertical-align: middle;">商品价格</th>
                                     </tr>
                                     </thead>
-                                    <tr>
-                                        <td style="text-align: center;"><img ng-src="{{pic_host +order.activity_pic_url}}" style="height: 80px;width: 80px;"></td>
-                                        <td style="text-align: center;vertical-align: middle;">{{order.good_name}}</td>
-                                        <td style="text-align: center;vertical-align: middle;">{{order.good_desc}}</td>
-                                        <td style="text-align: center;vertical-align: middle;">{{order.good_price}}</td>
+                                    <tr ng-repeat='item in order.items'>
+                                        <td style="text-align: center;"><img ng-src="{{item.prod_images | smallImg}}" style="height: 80px;width: 80px;"></td>
+                                        <td style="text-align: center;vertical-align: middle;">{{item.prod_name}}</td>
+                                        <td style="text-align: center;vertical-align: middle;">{{item.prod_desc}}</td>
+                                        <td style="text-align: center;vertical-align: middle;">{{item.prod_sku_price}}</td>
                                     </tr>
                                 </table>
                             </div>
