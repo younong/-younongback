@@ -55,8 +55,8 @@ define(['common/services'],
                             orderDetail.items = data.results;
                             // 计算商品数量
                             orderDetail.product_number = 0;
-                            for(var index in orderDetail.orderItems){
-                                var item = orderDetail.orderItems[index];
+                            for(var index in orderDetail.items){
+                                var item = orderDetail.items[index];
                                 orderDetail.product_number += item.product_quantity;
                             }
                             cb(null, orderDetail);

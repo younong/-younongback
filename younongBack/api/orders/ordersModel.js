@@ -121,6 +121,7 @@ orders.findDetail = function(orderid, cb){
 		'receiver_name',
 		'orders.order_no',
 		'order_status',
+		'order_status.status_name', // 订单状态
 		'orders.order_status_id',
 		'date_purchased',
 		'deliver_type',

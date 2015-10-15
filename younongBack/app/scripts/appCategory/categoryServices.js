@@ -33,7 +33,6 @@ define(['common/services'],
 	        	 */
 	        	addCate:function(catename, suc, err){
 	        		$http.get('/api/categories/add?catename='+catename).success(function(data){
-	        			debugger;
 	        			catesObj.data.unshift({
 	        				category_name:catename,
 	        				categories_id:data.result.insertId

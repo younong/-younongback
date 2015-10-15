@@ -72,6 +72,8 @@ require([
     'appProduct/productController',
     'appOrder/orderServices',
     'appOrder/orderController',
+    'appAddress/addressServices',
+    'appAddress/addressController',
     'datepicker-locale',
     'datepicker',
         'datepicker-locale',

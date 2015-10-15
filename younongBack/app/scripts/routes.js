@@ -89,7 +89,6 @@ define(['app'], function (app) {
                         }
                     }
                 })
-
                 .state("home.order", {
                     url: "/order/page/{page:[1-9]{1,4}}",
                     views: {
@@ -110,6 +109,20 @@ define(['app'], function (app) {
                         '': {
                             templateUrl: 'views/tplOrder/home.order.detail.html',
                             controller: 'OrderDetailCtrl'
+                        }, 'sidebar': {
+                            templateUrl: 'views/common/sidebar.html'
+                        },
+                        'footer': {
+                            templateUrl: 'views/common/footer.html'
+                        }
+                    }
+                })
+                .state("home.address", {
+                    url: "/order/address",
+                    views: {
+                        '': {
+                            templateUrl: 'views/tplAddress/home.address.html',
+                            controller: 'AddressCtrl'
                         }, 'sidebar': {
                             templateUrl: 'views/common/sidebar.html'
                         },
