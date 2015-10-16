@@ -1,0 +1,130 @@
+<!-- BEGIN PAGE -->
+<div class="page-content">
+
+    <!-- BEGIN PAGE CONTAINER-->
+    <div class="container-fluid">
+
+        <!-- BEGIN PAGE HEADER-->
+        <div class="row-fluid">
+
+            <div class="span12">
+
+                <!-- BEGIN PAGE TITLE & BREADCRUMB-->
+                <h3 class="page-title">
+
+                    Products
+                    <small>{{pageTitle}}</small>
+
+                </h3>
+
+                <ul class="breadcrumb">
+
+                    <li>
+                        <i class="icon-home"></i>
+                        <a ui-sref="home.index">首页</a>
+                        <i class="icon-angle-right"></i>
+                    </li>
+
+                    <li>
+                        <a ui-sref="home.activity({page:1})">轮播图片</a>
+                        <i class="icon-angle-right"></i>
+                    </li>
+                    <li>详细</li>
+
+                </ul>
+
+                <!-- END PAGE TITLE & BREADCRUMB-->
+
+            </div>
+
+        </div>
+
+        <div class="row-fluid">
+
+            <div class="span12">
+
+                <!-- BEGIN EXAMPLE TABLE PORTLET-->
+
+                <div class="portlet box grey" style="border: 1px solid #9d9c9c">
+
+                    <div class="portlet-body form">
+
+                        <!-- BEGIN FORM-->
+
+                        <form ng-submit="addImages()" class="form-horizontal form-bordered"  enctype="multipart/form-data" >
+                            <div class="control-group">
+                                <label class="control-label">轮播图片</label>
+
+
+                                <div class="controls">
+
+                                    <div  class="fileupload-new" ng-if="images.length==0"
+                                          style="margin-bottom: 10px;padding: 10px 10px;max-width: 200px;max-height: 200px;">
+                                        <img ngf-default-src="../../media/image/image5.jpg" ngf-src="item"
+                                             accept="image/*" style="border: 1px solid #ddd;padding: 10px 10px;">
+                                    </div>
+
+                                    <div class="fileupload fileupload-new" style="margin:0 0 10px 10px;float: left;" ng-repeat="item in images">
+                                        <div  class="fileupload-new"
+                                             style="margin-bottom: 40px;padding: 10px 10px;width: 200px;height: 200px;text-align: center">
+                                            <img ng-if="!update[$index]" ngf-default-src="../../media/image/image5.jpg" ngf-src="item"
+                                                 accept="image/*" style="border: 1px solid #ddd;padding: 10px 10px;">
+                                            <img ng-if="update[$index]" ngf-default-src="../../media/image/image5.jpg" ng-src="{{item}}"
+                                                 accept="image/*" style="border: 1px solid #ddd;padding: 10px 10px;">
+                                            <div ng-click="drop($index)" class="drop-box btn" style="margin: 10px 0;">删除</div>
+                                            <span ngf-select="replace($index)" class="btn btn-file" ng-model="imgArr[$index]">
+                                                <span class="fileupload-new">更换</span></span>
+                                        </div>
+                                    </div>
+
+                                    <div style="margin-left: 10px;clear: both">
+                                            <span class="btn btn-file" ngf-select="select()" ng-model="covers" ngf-multiple="true" ngf-keep="true">
+                                                <span class="fileupload-new">新增</span>
+                                            </span>
+                                    </div>
+
+                                    <span class="label label-important">NOTE!</span>
+                                    <span>图片预览仅支持最新版本的 Firefox, Chrome, Opera,Safari and Internet Explorer 10</span>
+                                </div>
+                            </div>
+
+
+                            <div class="form-actions">
+                                <button type="submit" class="btn blue"><i class="icon-ok"></i> 保存</button>
+                                <button type="button" class="btn" ng-click="backTo()">取消</button>
+                            </div>
+
+                        </form>
+
+                        <!-- END FORM-->
+
+                    </div>
+                    <!-- END EXAMPLE TABLE PORTLET-->
+
+                </div>
+
+            </div>
+
+            <!-- END PAGE CONTAINER-->
+
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="notifyModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title" id="notifyModalLabel">操作提醒</h4>
+            </div>
+            <div class="modal-body">
+                {{notifyContent}}
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">好的</button>
+                <!--<button type="button" class="btn btn-primary" ng-click="delivery(deliveryIndex,deliveryId)" data-dismiss="modal">确定</button>-->
+            </div>
+        </div>
+    </div>
+</div>

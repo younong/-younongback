@@ -131,6 +131,20 @@ define(['app'], function (app) {
                         }
                     }
                 })
+                .state("home.carousel", {
+                    url: "/carousel",
+                    views: {
+                        '': {
+                            templateUrl: 'views/tplCarousel/home.carousel.html',
+                            controller: 'CarouselCtrl'
+                        }, 'sidebar': {
+                            templateUrl: 'views/common/sidebar.html'
+                        },
+                        'footer': {
+                            templateUrl: 'views/common/footer.html'
+                        }
+                    }
+                })
         }
     ]);
 });
