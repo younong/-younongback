@@ -57,7 +57,7 @@ function deleteCity(req, res){
 	if(!cityId){
 		return res.json(400, {error: "请传入正确的参数"});
 	}
-	addressDao.deleteCity(cityId, function(err, data){
+	addressDao.deleteCityById(cityId, function(err, data){
 		if (!!err) {
 	        console.log(err);
 	        return res.json(500, {error: err});
@@ -115,11 +115,11 @@ function addDistrict(req, res){
 
 
 function deleteDistrict(req, res){
-	var disctrictId = req.query.disctrictId;
-	if(!disctrictId){
+	var districtId = req.query.districtId;
+	if(!districtId){
 		return res.json(400, {error: "请传入正确的参数"});
 	}
-	addressDao.deleteDistrict(disctrictId, function(err, data){
+	addressDao.deleteDistrictById(districtId, function(err, data){
 		if (!!err) {
 	        console.log(err);
 	        return res.json(500, {error: err});
@@ -182,7 +182,7 @@ function deleteComm(req, res){
 	if(!commId){
 		return res.json(400, {error: "请传入正确的参数"});
 	}
-	addressDao.deleteComm(commId, function(err, data){
+	addressDao.deleteCommById(commId, function(err, data){
 		if (!!err) {
 	        console.log(err);
 	        return res.json(500, {error: err});

@@ -14,12 +14,12 @@ var server = {
 
 config.mysql = {
 	port: process.env.MYSQL_PORT || 3306,
-	host: process.env.MYSQL_HOST || "120.131.66.174",
-	// host: process.env.MYSQL_HOST || "127.0.0.1",
-	user: "cartdbuser",
-	// user: "root",
-	password: "cart@2014",
-	// password: "",
+	// host: process.env.MYSQL_HOST || "120.131.66.174",
+	host: process.env.MYSQL_HOST || "127.0.0.1",
+	// user: "cartdbuser",
+	user: "root",
+	// password: "cart@2014",
+	password: "",
 	database: "yonong"
 };
 
