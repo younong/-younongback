@@ -26,19 +26,25 @@ define(['common/services'],
 	        		})
         		},
         		addCity:function(provinceId, cityName, cb){
-        			data = [];
-        			cb&&cb(null, data);
-        			console.log('cityName', cityName);
+                    $http.get('/api/addresses/addCity?provinceId='+provinceId+'&cityName='+cityName).success(function(data){
+                        cb(null, data.results)
+                    }).error(function(err){
+                        cb(err, null)
+                    })
         		},
         		modifyCity:function(cityId, cityName, cb){
-        			data = [];
-        			cb&&cb(null, data);
-        			console.log('修改为', cityName);
+        			$http.get('/api/addresses/modifyCity?cityId='+cityId+'&cityName='+cityName).success(function(data){
+                        cb(null, data.results)
+                    }).error(function(err){
+                        cb(err, null)
+                    })
         		},
         		deleteCity:function(cityId, cb){
-        			data = [];
-        			cb&&cb(null, data);
-        			console.log("已经删除了", cityId);
+        			$http.get('/api/addresses/deleteCity?cityId='+cityId).success(function(data){
+                        cb(null, data.results)
+                    }).error(function(err){
+                        cb(err, null)
+                    })
         		},
         		// 区，获取，添加，修改，删除
         		getDistricts:function(cityId, cb){
@@ -49,22 +55,25 @@ define(['common/services'],
 	        		})
         		},
         		addDistrict:function(cityId, districtName, cb){
-        			data = [];
-        			cb&&cb(null, data);
-
-        			console.log("添加区",districtName);
+        			$http.get('/api/addresses/addDistrict?cityId='+cityId+'&districtName='+districtName).success(function(data){
+                        cb(null, data.results)
+                    }).error(function(err){
+                        cb(err, null)
+                    })
         		},
         		modifyDistrict:function(districtId, districtName, cb){
-        			data = [];
-        			cb&&cb(null, data);
-
-        			console.log("修改区",districtName);
+        			$http.get('/api/addresses/modifyDistrict?districtId='+districtId+'&districtName='+districtName).success(function(data){
+                        cb(null, data.results)
+                    }).error(function(err){
+                        cb(err, null)
+                    })
         		},
         		deleteDistrict:function(districtId, cb){
-        			data = [];
-        			cb&&cb(null, data);
-
-        			console.log("删除区", districtId);
+        			$http.get('/api/addresses/deleteDistrict?districtId='+districtId).success(function(data){
+                        cb(null, data.results)
+                    }).error(function(err){
+                        cb(err, null)
+                    })
         		},
         		// 小区，获取，添加，修改，删除
         		// TODO xjc
@@ -76,19 +85,26 @@ define(['common/services'],
 	        		})
         		},
         		addComm:function(districtId, commName, cb){
-        			data = [];
-        			cb&&cb(null, data);
-        			console.log("添加小区",commName);
+        			$http.get('/api/addresses/addComm?districtId='+districtId+'&commName='+commName).success(function(data){
+                        cb(null, data.results)
+                    }).error(function(err){
+                        cb(err, null)
+                    })
         		},
         		modifyComm:function(commId, commName, cb){
-        			data = [];
-        			cb&&cb(null, data);
-        			console.log("修改小区",commName);
+        			$http.get('/api/addresses/modifyComm?commId='+commId+'&commName='+commName).success(function(data){
+                        cb(null, data.results)
+                    }).error(function(err){
+                        cb(err, null)
+                    })
+
         		},
         		deleteComm:function(commId, cb){
-        			data = [];
-        			cb&&cb(null, data);
-        			console.log("删除小区",commId);
+        			$http.get('/api/addresses/deleteComm?commId='+commId).success(function(data){
+                        cb(null, data.results);
+                    }).error(function(err){
+                        cb(err, null);
+                    })
         		},
         	}
         });

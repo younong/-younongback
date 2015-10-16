@@ -54,6 +54,14 @@ define(['common/controllers', 'domReady'],
                     console.log('获取省份数据失败');
                 }
                 $scope.provinces = data;
+                // 取得第一个城市，设置为当前选择
+                if($scope.provinces.length > 0){
+                    $scope.currentIds.provinceId = $scope.provinces[0].province_id;
+                    $scope.selectProvince($scope.currentIds.provinceId);
+                }else{
+                    $scope.cities = [];
+                    $scope.selectCity(-1);
+                }
             })
 
             // 监听被选择的地区的变化
@@ -158,7 +166,8 @@ define(['common/controllers', 'domReady'],
                 if(!$scope.currentIds.provinceId){
                     $scope.showTipModal({
                         title:'提示',
-                        tips:"请选中添加城市的省份"
+                        tips:"请选中添加城市的省份",
+                        ensure:function(){return true;}
                     });
                     return;
                 }
@@ -174,13 +183,17 @@ define(['common/controllers', 'domReady'],
                             if(err){
                                 $scope.showTipModal({
                                     title:"提示",
-                                    tips:"城市添加失败"
+                                    tips:"城市添加失败",
+                                    ensure:function(){return true;}
                                 })
                             }else{
-                                $scope.showTipModal({
-                                    title:"提示",
-                                    tips:"城市添加成功"
-                                })
+                                // $scope.showTipModal({
+                                //     title:"提示",
+                                //     tips:"城市添加成功",
+                                //     ensure:function(){return true;}
+                                // })
+                                // 刷新当前的数据 todo
+                                $scope.selectProvince($scope.currentIds.provinceId);
                             }
                         })
 
@@ -194,7 +207,8 @@ define(['common/controllers', 'domReady'],
                 if(!$scope.currentIds.cityId){
                     $scope.showTipModal({
                         title:'提示',
-                        tips:"请选中需要修改的城市"
+                        tips:"请选中需要修改的城市",
+                        ensure:function(){return true;}
                     });
                     return;
                 }
@@ -210,13 +224,19 @@ define(['common/controllers', 'domReady'],
                             if(err){
                                 $scope.showTipModal({
                                     title:"提示",
-                                    tips:"城市修改失败"
+                                    tips:"城市修改失败",
+                                    ensure:function(){return true;}
                                 })
                             }else{
-                                $scope.showTipModal({
-                                    title:"提示",
-                                    tips:"城市修改成功"
-                                })
+                                // $scope.showTipModal({
+                                //     title:"提示",
+                                //     tips:"城市修改成功",
+                                //     ensure:function(){return true;}
+                                // })
+                                // 直接更新需要修改的字段
+                                var city = getObjectById($scope.currentIds.cityId,$scope.cities,'city');
+                                console.log('city',city);
+                                city.city_name = inputValue;
                             }
                         })
 
@@ -230,7 +250,8 @@ define(['common/controllers', 'domReady'],
                 if(!$scope.currentIds.cityId){
                     $scope.showTipModal({
                         title:'提示',
-                        tips:"请选中需要删除的城市"
+                        tips:"请选中需要删除的城市",
+                        ensure:function(){return true;}
                     });
                     return;
                 }
@@ -242,13 +263,17 @@ define(['common/controllers', 'domReady'],
                             if(err){
                                 $scope.showTipModal({
                                     title:"提示",
-                                    tips:"城市删除失败"
+                                    tips:"城市删除失败",
+                                    ensure:function(){return true;}
                                 })
                             }else{
-                                $scope.showTipModal({
-                                    title:"提示",
-                                    tips:"城市删除成功"
-                                })
+                                // $scope.showTipModal({
+                                //     title:"提示",
+                                //     tips:"城市删除成功",
+                                //     ensure:function(){return true;}
+                                // })
+                                console.log('删除成功');
+                                $scope.selectProvince($scope.currentIds.provinceId);
                             }
                         })
                         return true;
@@ -264,7 +289,8 @@ define(['common/controllers', 'domReady'],
                 if(!$scope.currentIds.cityId){
                     $scope.showTipModal({
                         title:'提示',
-                        tips:"请选中添加区的城市"
+                        tips:"请选中添加区的城市",
+                        ensure:function(){return true;}
                     });
                     return;
                 }
@@ -280,13 +306,16 @@ define(['common/controllers', 'domReady'],
                             if(err){
                                 $scope.showTipModal({
                                     title:"提示",
-                                    tips:"区添加失败"
+                                    tips:"区添加失败",
+                                    ensure:function(){return true;}
                                 })
                             }else{
-                                $scope.showTipModal({
-                                    title:"提示",
-                                    tips:"区添加成功"
-                                })
+                                // $scope.showTipModal({
+                                //     title:"提示",
+                                //     tips:"区添加成功",
+                                //     ensure:function(){return true;}
+                                // })
+                                $scope.selectCity($scope.currentIds.cityId);
                             }
                         })
 
@@ -300,7 +329,8 @@ define(['common/controllers', 'domReady'],
                 if(!$scope.currentIds.districtId){
                     $scope.showTipModal({
                         title:'提示',
-                        tips:"请选中需要修改的区"
+                        tips:"请选中需要修改的区",
+                        ensure:function(){return true;}
                     });
                     return;
                 }
@@ -316,13 +346,19 @@ define(['common/controllers', 'domReady'],
                             if(err){
                                 $scope.showTipModal({
                                     title:"提示",
-                                    tips:"区修改失败"
+                                    tips:"区修改失败",
+                                    ensure:function(){return true;}
+
                                 })
                             }else{
-                                $scope.showTipModal({
-                                    title:"提示",
-                                    tips:"区修改成功"
-                                })
+                                // $scope.showTipModal({
+                                //     title:"提示",
+                                //     tips:"区修改成功",
+                                //     ensure:function(){return true;}
+                                // })
+                                // 直接更新需要修改的字段
+                                var district = getObjectById($scope.currentIds.districtId,$scope.districts,'district');
+                                district.district_name = inputValue;
                             }
                         })
 
@@ -336,7 +372,8 @@ define(['common/controllers', 'domReady'],
                 if(!$scope.currentIds.districtId){
                     $scope.showTipModal({
                         title:'提示',
-                        tips:"请选中需要删除的区"
+                        tips:"请选中需要删除的区",
+                        ensure:function(){return true;}
                     });
                     return;
                 }
@@ -348,13 +385,16 @@ define(['common/controllers', 'domReady'],
                             if(err){
                                 $scope.showTipModal({
                                     title:"提示",
-                                    tips:"区删除失败"
+                                    tips:"区删除失败",
+                                    ensure:function(){return true;}
                                 })
                             }else{
-                                $scope.showTipModal({
-                                    title:"提示",
-                                    tips:"区删除成功"
-                                })
+                                // $scope.showTipModal({
+                                //     title:"提示",
+                                //     tips:"区删除成功",
+                                //     ensure:function(){return true;}
+                                // })
+                                $scope.selectCity($scope.currentIds.cityId);
                             }
                         })
                         return true;
@@ -369,7 +409,8 @@ define(['common/controllers', 'domReady'],
                 if(!$scope.currentIds.districtId){
                     $scope.showTipModal({
                         title:'提示',
-                        tips:"请选中添加小区的城市"
+                        tips:"请选中添加小区的城市",
+                        ensure:function(){return true;}
                     });
                     return;
                 }
@@ -385,13 +426,16 @@ define(['common/controllers', 'domReady'],
                             if(err){
                                 $scope.showTipModal({
                                     title:"提示",
-                                    tips:"小区添加失败"
+                                    tips:"小区添加失败",
+                                    ensure:function(){return true;}
                                 })
                             }else{
-                                $scope.showTipModal({
-                                    title:"提示",
-                                    tips:"小区添加成功"
-                                })
+                                // $scope.showTipModal({
+                                //     title:"提示",
+                                //     tips:"小区添加成功",
+                                //     ensure:function(){return true;}
+                                // })
+                                $scope.selectDistrict($scope.currentIds.districtId);
                             }
                         })
 
@@ -405,7 +449,8 @@ define(['common/controllers', 'domReady'],
                 if(!$scope.currentIds.commId){
                     $scope.showTipModal({
                         title:'提示',
-                        tips:"请选中需要修改的小区"
+                        tips:"请选中需要修改的小区",
+                        ensure:function(){return true;}
                     });
                     return;
                 }
@@ -421,13 +466,18 @@ define(['common/controllers', 'domReady'],
                             if(err){
                                 $scope.showTipModal({
                                     title:"提示",
-                                    tips:"小区修改失败"
+                                    tips:"小区修改失败",
+                                    ensure:function(){return true;}
                                 })
                             }else{
-                                $scope.showTipModal({
-                                    title:"提示",
-                                    tips:"小区修改成功"
-                                })
+                                // $scope.showTipModal({
+                                //     title:"提示",
+                                //     tips:"小区修改成功",
+                                //     ensure:function(){return true;}
+                                // })
+                                // 直接更新需要修改的字段
+                                var comm = getObjectById($scope.currentIds.commId,$scope.comms,'comm');
+                                comm.comm_name = inputValue;
                             }
                         })
 
@@ -441,7 +491,8 @@ define(['common/controllers', 'domReady'],
                 if(!$scope.currentIds.commId){
                     $scope.showTipModal({
                         title:'提示',
-                        tips:"请选中需要删除的小区"
+                        tips:"请选中需要删除的小区",
+                        ensure:function(){return true;}
                     });
                     return;
                 }
@@ -453,14 +504,19 @@ define(['common/controllers', 'domReady'],
                             if(err){
                                 $scope.showTipModal({
                                     title:"提示",
-                                    tips:"小区删除失败"
+                                    tips:"小区删除失败",
+                                    ensure:function(){return true;}
                                 })
                             }else{
-                                $scope.showTipModal({
-                                    title:"提示",
-                                    tips:"小区删除成功"
-                                })
+                                // $scope.showTipModal({
+                                //     title:"提示",
+                                //     tips:"小区删除成功",
+                                //     ensure:function(){return true;}
+                                // })
+                                console.log("删除成功");
+                                $scope.selectDistrict($scope.currentIds.districtId);
                             }
+                            console.log(data);
                         })
                         return true;
                     }
@@ -473,6 +529,13 @@ define(['common/controllers', 'domReady'],
                     var item = data[index];
                     if(item[type+'_id'] === id)
                         return item[type+'_name'];
+                }
+            }
+            function getObjectById(id,data,type){
+                for(var index in data){
+                    var item = data[index];
+                    if(item[type+'_id'] === id)
+                        return item;
                 }
             }
         });
