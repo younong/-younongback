@@ -1,7 +1,7 @@
 {
-    "server": "localhost",
-    "userName": "root",
-    "password": "123456",
+    "server": "120.131.66.174",
+    "userName": "cartdbuser",
+    "password": "cart@2014",
     "options": {
         "debug": {
             "packet": true,
@@ -10,7 +10,8 @@
             "token": false,
             "log": true
         },
-        "database": "shopv3.0_dev",
+        "database": "yonong",
         "rowCollectionOnRequestCompletion":true
     }
 }
+

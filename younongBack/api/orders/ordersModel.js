@@ -101,7 +101,7 @@ orders.getOrderCountByCondition = function(condition, cb){
 	sql += "select count(order_id) as total from orders " + sqlCondition;
 
 	// 查询并返回结果
-	SqlClient.query(sql,function(err, data){
+	SqlClient.query(sql,null,function(err, data){
         if(err){
             return  cb&&cb(err, null);
         }
@@ -210,7 +210,7 @@ orders.updateDeliverStatus = function(orderids, status, cb){
  	var sql = 'select * from order_status';
  	
  	// 查询并返回结果
-	SqlClient.query(sql,function(err, data){
+	SqlClient.query(sql,null,function(err, data){
         if(err){
             return  cb&&cb(err, null);
         }

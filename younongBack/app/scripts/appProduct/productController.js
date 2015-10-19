@@ -6,6 +6,7 @@ define(['common/controllers', 'appProduct/productServices', 'domReady', 'wysiwyg
     function (controllers, ProductService, domReady, wysiwyg, SiteConfig) {
         controllers.controller('ProductCtrl', ['$scope', 'ProductService',
             function ($scope, ProductService) {
+                $scope.keywords = '';
                 $scope.count = 0;
                 $scope.currentPage = 1;
                 $scope.numPages = 1;

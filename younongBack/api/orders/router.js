@@ -10,6 +10,7 @@ var moment = require('moment');
  * @desc 根据条件查询订单
  */
 function findOrder(req,res){
+    console.log(req.query);
 	var query = req.query;
 	// 组装条件对象
 	var condition = {orderNo:null,dateRange:null,orderStatusId:null};

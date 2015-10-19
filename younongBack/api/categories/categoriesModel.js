@@ -29,7 +29,7 @@ var categories = module.exports;
 
 categories.find = function(cb){
     var sql = "select categories_id, category_name, date_added from categories where parent_id is null and category_status=1";
-    SqlClient.query(sql,function(err, data){
+    SqlClient.query(sql,null,function(err, data){
         if(err){
             return  cb&&cb(err, null);
         }

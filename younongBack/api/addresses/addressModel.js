@@ -37,7 +37,7 @@ addressDao.getProvinces = function(cb){
 	// cb && cb(null, data);
 
 	var sql = "select * from provinces";
-	sqlClient.query(sql, function(err, data){
+	sqlClient.query(sql,null, function(err, data){
 		if(err){
 			return cb && cb(err, null);
 		}
