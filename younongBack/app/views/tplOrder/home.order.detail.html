@@ -64,15 +64,15 @@
                                 <table class="table table-bordered table-hover definewidth m10">
                                     <tr>
                                         <th>订单编号</th><td>{{order.order_no}}</td>
-                                        <th>活动名称</th><td>{{order.activity_name}}</td>
                                         <th>订单状态</th><td>{{order.status_name}}</td>
                                         <th>下单时间</th><td>{{order.date_purchased | date:"yyyy-MM-dd"}}</td>
                                         <th>收货方式</th><td>{{order.deliver_type}}</td>
+                                        <th>商品种类数</th><td>{{order.items.length}}</td>
                                     </tr>
                                     <tr>
                                         <th>商品数量</th><td>{{order.product_number}}</td>
                                         <th>订单价格</th><td>{{order.order_total}}</td>
-                                        <th>优惠券</th><td>{{order.coupon_price}}元</td>
+                                        <th>优惠券</th><td>无</td>
                                         <th>付款方式</th><td>{{order.payment_type}}</td>
                                         <th>实付金额</th><td>{{order.payment_amount}}</td>
                                     </tr>
@@ -85,13 +85,16 @@
                                         <th style="text-align: center;vertical-align: middle;">商品名称</th>
                                         <th style="text-align: center;vertical-align: middle;">商品描述</th>
                                         <th style="text-align: center;vertical-align: middle;">商品价格</th>
+                                        <th style="text-align: center;vertical-align: middle;">商品数量</th>
+
                                     </tr>
                                     </thead>
                                     <tr ng-repeat='item in order.items'>
                                         <td style="text-align: center;"><img ng-src="{{item.prod_images | smallImg}}" style="height: 80px;width: 80px;"></td>
                                         <td style="text-align: center;vertical-align: middle;">{{item.prod_name}}</td>
                                         <td style="text-align: center;vertical-align: middle;">{{item.prod_desc}}</td>
-                                        <td style="text-align: center;vertical-align: middle;">{{item.prod_sku_price}}</td>
+                                        <td style="text-align: center;vertical-align: middle;">￥{{item.prod_sku_price}}</td>
+                                        <td style="text-align: center;vertical-align: middle;">{{item.product_quantity}}</td>
                                     </tr>
                                 </table>
                             </div>

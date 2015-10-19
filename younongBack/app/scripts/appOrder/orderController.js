@@ -14,6 +14,7 @@ define(['common/controllers', 'appOrder/orderServices', 'moment', 'domReady', 'c
         	}
         	$scope.orderNo = '';
         	$scope.params ={};
+            $scope.point=[];
 
             $scope.count = 0;
             $scope.currentPage = 1;
@@ -23,15 +24,15 @@ define(['common/controllers', 'appOrder/orderServices', 'moment', 'domReady', 'c
             $scope.pageStart = ($scope.currentPage - 1) * $scope.pageSize + 1;
             $scope.pageEnd = $scope.pageSize;
 
-            window.scope = $scope;
+            //window.scope = $scope;
             var load =function(params){
             	params.page = $scope.currentPage;
             	params.size = $scope.pageSize;
                 OrderServices.getOrders(params,function(err, data){
                     $scope.count = data.counts;
                     $scope.orders = data.results;
-                    $scope.numPages = Math.ceil(data.counts / $scope.pageSize);
-                    $scope.pageStart = ($scope.currentPage - 1) * $scope.pageSize + 1;
+                    $scope.numPages = data.counts>0?Math.ceil(data.counts / $scope.pageSize):1;
+                    $scope.pageStart = data.counts>0?($scope.currentPage - 1) * $scope.pageSize + 1:0;
                     $scope.pageEnd = $scope.pageSize * $scope.currentPage > data.counts ? data.counts : $scope.currentPage * $scope.pageSize;
                 })
             }
@@ -45,10 +46,10 @@ define(['common/controllers', 'appOrder/orderServices', 'moment', 'domReady', 'c
                 $scope.orderStatusOptions = data.results;
                 // 添加空选项
                 $scope.orderStatusOptions.unshift({
-                    order_status_id:'',
-                    status_name:'不选'
+                    order_status_id:0,
+                    status_name:'全选'
                 })
-                $scope.conditionParams.orderStatusId = '';
+                $scope.conditionParams.orderStatusId=$scope.orderStatusOptions[0].order_status_id;
             })
 
             // 翻页
@@ -58,6 +59,7 @@ define(['common/controllers', 'appOrder/orderServices', 'moment', 'domReady', 'c
                 $scope.allChecked = false;
             };
             $scope.lookUp=function(){
+
                 $scope.currentPage = 1;
                 load($scope.params);
                 $scope.allChecked = false;
@@ -80,6 +82,7 @@ define(['common/controllers', 'appOrder/orderServices', 'moment', 'domReady', 'c
             }
 
             $scope.loadByOrderNo = function(){
+
             	$scope.params = {
             		orderNo:$scope.orderNo
             	}
@@ -147,6 +150,20 @@ define(['common/controllers', 'appOrder/orderServices', 'moment', 'domReady', 'c
                     order.checked = allChecked;
                 }
             }
+            $scope.judge=function(page,index){
+                if(Math.abs($scope.currentPage - page)==5&&page!=1&&page!=$scope.numPages){
+                    $scope.point[index]=true;
+                }else{
+                    $scope.point[index]=false;
+                }
+
+                if(Math.abs($scope.currentPage - page)<=5||page==$scope.numPages||page==1){
+                    return true;
+                }else{
+                    return false;
+                }
+            }
+
         }),
         controllers.controller('OrderDetailCtrl', function ($scope, OrderServices, $stateParams){
             var orderid = $stateParams.order_id;
@@ -155,8 +172,8 @@ define(['common/controllers', 'appOrder/orderServices', 'moment', 'domReady', 'c
                     console.log("获取订单出错");
                     return;
                 }
-                $scope.order = data;
                 console.log(data);
+                $scope.order = data;
             })
 
         })

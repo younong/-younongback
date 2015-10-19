@@ -117,7 +117,7 @@
                             <div class="dataTables_info" id="sample_1_info">当前 {{pageStart}} 到 {{pageEnd}} 共 {{products.counts}} 条记录
                             </div>
                         </div>
-                        <div class="span6">
+                        <div class="span6" style="width:100%;text-align: center;">
                             <div class="dataTables_paginate paging_bootstrap pagination">
                                 <pagination>
                                     <ul num-pages="numPages" current-page="currentPage"
@@ -125,8 +125,8 @@
                                         <li class="prev" ng-class="{disabled: noPrevious()}"><a
                                                 ng-click="selectPrevious()">&laquo; </a>
                                         </li>
-                                        <li ng-repeat="page in pages" ng-class="{active: isActive(page)}"><a
-                                                ng-click="selectPage(page)">{{page}}</a></li>
+                                        <li ng-if="judge(page,$index)" ng-repeat="page in pages" ng-class="{active: isActive(page)}"><a
+                                                ng-click="selectPage(page)" ng-if="!point[$index]">{{page}}</a> <span ng-if="point[$index]">...</span></li>
                                         <li class="next" ng-class="{disabled: noNext()}"><a
                                                 ng-click="selectNext()"> &raquo; </a>
                                         </li>

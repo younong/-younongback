@@ -6,11 +6,12 @@ define(['common/controllers', 'appProduct/productServices', 'domReady', 'wysiwyg
     function (controllers, ProductService, domReady, wysiwyg, SiteConfig) {
         controllers.controller('ProductCtrl', ['$scope', 'ProductService',
             function ($scope, ProductService) {
+                $scope.point=[];
                 $scope.keywords = '';
                 $scope.count = 0;
                 $scope.currentPage = 1;
                 $scope.numPages = 1;
-                $scope.pageSize = 2;
+                $scope.pageSize = 1;
                 $scope.pages = [];
                 $scope.pageStart = ($scope.currentPage - 1) * $scope.pageSize + 1;
                 $scope.pageEnd = $scope.pageSize;
@@ -18,8 +19,8 @@ define(['common/controllers', 'appProduct/productServices', 'domReady', 'wysiwyg
                     ProductService.getGoods($scope.currentPage,$scope.pageSize,$scope.keywords,function(data){
                         $scope.products=data;
                         console.log(data);
-                        $scope.numPages = Math.ceil(data.counts / $scope.pageSize);
-                        $scope.pageStart = ($scope.currentPage - 1) * $scope.pageSize + 1;
+                        $scope.numPages = $scope.products.counts >0 ?Math.ceil(data.counts / $scope.pageSize):1;
+                        $scope.pageStart = $scope.products.counts >0 ?($scope.currentPage - 1) * $scope.pageSize + 1:0;
                         $scope.pageEnd = $scope.pageSize * $scope.currentPage > $scope.products.counts ? $scope.products.counts : $scope.currentPage * $scope.pageSize;
 
                     })
@@ -49,6 +50,19 @@ define(['common/controllers', 'appProduct/productServices', 'domReady', 'wysiwyg
                             $scope.products.results.splice(index);
                         }
                     })
+                }
+                $scope.judge=function(page,index){
+                    if(Math.abs($scope.currentPage - page)==5&&page!=1&&page!=$scope.numPages){
+                        $scope.point[index]=true;
+                    }else{
+                        $scope.point[index]=false;
+                    }
+
+                    if(Math.abs($scope.currentPage - page)<=5||page==$scope.numPages||page==1){
+                        return true;
+                    }else{
+                        return false;
+                    }
                 }
             }
         ]);

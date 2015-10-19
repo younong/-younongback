@@ -12,6 +12,10 @@ var orders = module.exports;
  */
 orders.findByCondition = function(condition, page, size, cb){
 	// console.log(page-1, size);
+    if(condition.orderStatusId == 0){
+        condition.orderStatusId='';
+    }
+
 	var sql = '';
 	var fields = [
 		'order_id', // id
