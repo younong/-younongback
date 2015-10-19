@@ -11,7 +11,7 @@ define(['common/controllers', 'appProduct/productServices', 'domReady', 'wysiwyg
                 $scope.count = 0;
                 $scope.currentPage = 1;
                 $scope.numPages = 1;
-                $scope.pageSize = 1;
+                $scope.pageSize = 10;
                 $scope.pages = [];
                 $scope.pageStart = ($scope.currentPage - 1) * $scope.pageSize + 1;
                 $scope.pageEnd = $scope.pageSize;
