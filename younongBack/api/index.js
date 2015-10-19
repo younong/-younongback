@@ -18,7 +18,7 @@ apiModule.init = function (app) {
     }));
 
     app.use(multer({
-        dest: "app/public/uploads",
+        dest: "./app/public/uploads",
 //        changeDest: function(dest, req, res) {
 //            var appRoot = req.query.app;
 //            var month = moment().format('YYYYMM');
