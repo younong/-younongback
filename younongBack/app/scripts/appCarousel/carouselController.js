@@ -39,7 +39,7 @@ define(['common/controllers','appCarousel/othersService','config'],
                     }
                     var uploadCover = function (imageData,cb) {
                         Upload.upload({
-                            url: SiteConfig.pic_host + 'api/goods/upload',
+                            url: 'api/goods/upload',
                             file: imageData
                         }).success(function (data, status, headers, config) {
                             console.log(data);

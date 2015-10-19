@@ -148,7 +148,7 @@ define(['common/controllers', 'appProduct/productServices', 'domReady', 'wysiwyg
 
                     var uploadCover = function (cb) {
                         Upload.upload({
-                            url: SiteConfig.pic_host + 'api/goods/upload',
+                            url: 'api/goods/upload',
                             file: $scope.covers[0]
                         }).success(function (data, status, headers, config) {
                             console.log(data);
@@ -277,7 +277,7 @@ define(['common/controllers', 'appProduct/productServices', 'domReady', 'wysiwyg
                     if ($scope.covers.length!=0) {
                         var uploadCover = function (cb) {
                             Upload.upload({
-                                url: SiteConfig.pic_host + 'api/goods/upload',
+                                url:'api/goods/upload',
                                 file: $scope.covers[0]
                             }).success(function (data, status, headers, config) {
                                 console.log(data);
