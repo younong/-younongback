@@ -106,6 +106,20 @@ define(['common/services'],
                         cb(err, null);
                     })
         		},
+                addSince:function(districtId, commName, cb){
+                    $http.get('/api/addresses/addSince?districtId='+districtId+'&commName='+commName).success(function(data){
+                        cb(null, data.results)
+                    }).error(function(err){
+                        cb(err, null)
+                    })
+                },
+                getSince:function(districtId, cb){
+                    $http.get('/api/addresses/getSince?districtId='+districtId).success(function(data){
+                        cb(null, data.results)
+                    }).error(function(err){
+                        cb(err, null)
+                    })
+                }
         	}
         });
     });

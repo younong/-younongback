@@ -131,6 +131,20 @@ define(['app'], function (app) {
                         }
                     }
                 })
+                .state("home.sinceAddress", {
+                    url: "/sinceaddress",
+                    views: {
+                        '': {
+                            templateUrl: 'views/tplSince/home.since.html',
+                            controller: 'SinceCtrl'
+                        }, 'sidebar': {
+                            templateUrl: 'views/common/sidebar.html'
+                        },
+                        'footer': {
+                            templateUrl: 'views/common/footer.html'
+                        }
+                    }
+                })
                 .state("home.carousel", {
                     url: "/carousel",
                     views: {

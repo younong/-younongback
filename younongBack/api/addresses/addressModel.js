@@ -203,7 +203,7 @@ addressDao.addDistrict = function(cityId, districtName, cb){
 
 // 小区
 addressDao.getComms = function(districtId, cb){
-	var sql = 'select * from communities where district_id = ?';
+	var sql = 'select * from communities where district_id = ? and since_statue = 0';
 	sqlClient.query(sql, [districtId], function(err, data){
 		if(err){
 			return cb && cb(err, null);
@@ -251,4 +251,27 @@ addressDao.addComm = function(districtId, cityName, cb){
 		}
 		return cb && cb(null, data);
 	})
+}
+
+//提货点
+
+addressDao.getSince = function(districtId, cb){
+    var sql = 'select * from communities where district_id = ? and since_statue = 1';
+    sqlClient.query(sql, [districtId], function(err, data){
+        if(err){
+            return cb && cb(err, null);
+        }
+        return cb && cb(null, data);
+    })
+
+}
+
+addressDao.addSince = function(districtId, cityName, cb){
+    var sql = 'insert into communities (comm_name, district_id,site_id,since_statue) values (?, ?, 0,1)';
+    sqlClient.query(sql, [cityName, districtId], function(err, data){
+        if(err){
+            return cb && cb(err, null);
+        }
+        return cb && cb(null, data);
+    })
 }

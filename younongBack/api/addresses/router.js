@@ -207,21 +207,100 @@ function modifyComm(req, res){
 	})
 }
 
-router.get("/getProvinces",getProvinces);
+//新增提货点
 
-router.get("/addCity",addCity);
-router.get("/deleteCity",deleteCity);
-router.get("/modifyCity",modifyCity);
-router.get("/getCities",getCities);
+function addSince(req,res){
+    var districtId = req.query.districtId;
+    var commName = req.query.commName;
+    if(!districtId || ! commName){
+        return res.json(400, {error: "请传入正确的参数"});
+    }
+    addressDao.addSince(districtId, commName, function(err,data){
+        if (!!err) {
+            console.log(err);
+            return res.json(500, {error: err});
+        }
+        return res.json(200, {results: data});
+    })
 
-router.get("/addDistrict",addDistrict);
-router.get("/deleteDistrict",deleteDistrict);
-router.get("/modifyDistrict",modifyDistrict);
-router.get("/getDistricts",getDistricts);
+}
 
-router.get("/addComm",addComm);
-router.get("/deleteComm",deleteComm);
-router.get("/modifyComm",modifyComm);
-router.get("/getComms",getComms);
+//删除提货点
+
+function deleteSince(req,res){
+    var commId = req.query.commId;
+    if(!commId){
+        return res.json(400, {error: "请传入正确的参数"});
+    }
+    addressDao.deleteCommById(commId, function(err, data){
+        if (!!err) {
+            console.log(err);
+            return res.json(500, {error: err});
+        }
+        return res.json(200, {results: data});
+    })
+
+}
+
+//修改提货点
+
+function modifySince(req,res){
+    var commId = req.query.commId;
+    var commName = req.query.commName;
+    if(!commId || ! commName){
+        return res.json(400, {error: "请传入正确的参数"});
+    }
+    addressDao.modifyComm(commId, commName, function(err,data){
+        if (!!err) {
+            console.log(err);
+            return res.json(500, {error: err});
+        }
+        return res.json(200, {results: data});
+    })
+
+}
+
+//获取提货点
+
+function getSince(req,res){
+
+    var districtId = req.query.districtId;
+    if(!districtId){
+        return res.json(400, {error: "请传入正确的参数"});
+    }
+    addressDao.getSince(districtId, function(err, data){
+        if (!!err) {
+            console.log(err);
+            return res.json(500, {error: err});
+        }
+        return res.json(200, {results: data});
+    })
+
+}
+
+
+
+router.get("/getProvinces",getProvinces);//获取省
+
+router.get("/addCity",addCity);//新增城市
+router.get("/deleteCity",deleteCity);//删除城市
+router.get("/modifyCity",modifyCity);//修改城市
+router.get("/getCities",getCities);//获得城市
+
+router.get("/addDistrict",addDistrict);//新增区
+router.get("/deleteDistrict",deleteDistrict);//删除区
+router.get("/modifyDistrict",modifyDistrict);//修改区
+router.get("/getDistricts",getDistricts);//获得区
+
+router.get("/addComm",addComm);//新增小区
+router.get("/deleteComm",deleteComm);//删除小区
+router.get("/modifyComm",modifyComm);//修改小区
+router.get("/getComms",getComms);//获得小区
+
+router.get("/addSince",addSince);//新增小区
+router.get("/deleteSince",deleteSince);//删除小区
+router.get("/modifySince",modifySince);//修改小区
+router.get("/getSince",getSince);//获得小区
+
 
 module.exports = router;
