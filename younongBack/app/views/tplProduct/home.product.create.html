@@ -122,20 +122,23 @@
                                 </div>
                             </div>
                             <div class="control-group">
+                                <label class="control-label">商品重量</label>
+
+                                <div class="controls">
+                                    <input type="text" class="m-wrap span12" placeholder="0.00kg"
+                                           ng-model="productForm.prod_weight" required>
+                                </div>
+                            </div>
+
+                            <div class="control-group">
                                 <label class="control-label">商品种类</label>
 
                                 <div class="controls">
-
-
-
-
                                     <div class="checkbox"  style="margin-left: 20px !important;width: 110px;" ng-repeat="item in categories.data">
                                         <label>
                                             <input type="checkbox" value="{{item.categories_id}}" name="category"> {{item.category_name}}
                                         </label>
                                     </div>
-
-
                                     <!--<input type="text" class="m-wrap span12" placeholder="选择种类"-->
                                            <!--ng-model="productForm.prod_categorynames" required>-->
                                 </div>

@@ -159,8 +159,6 @@ define(['common/controllers', 'appProduct/productServices', 'domReady', 'wysiwyg
                     uploadCover(function (data) {
                         $scope.productForm.prod_images = data.path;
                         $scope.productForm.prod_detail = $('#editor').html();
-                        $scope.productForm.prod_categoryids=1;
-                        $scope.productForm.prod_categorynames='果蔬生鲜';
                         ProductService.addGoods($scope.productForm, function (error, data) {
                             if (error) {
                                 alert('新增商品失败'+error);

@@ -35,6 +35,7 @@ function getGoodsInformation(req,res){
 // 添加商品
 function addGoods(req,res){
     var goods=req.body;
+    console.log(goods);
     goodsDao.addGoods(goods,function(err,data){
             if(err){
                 return res.json(500,err);

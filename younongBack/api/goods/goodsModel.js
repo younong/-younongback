@@ -43,7 +43,7 @@ goodsDao.getGoods = function (page,size,keyword,cb) {
 goodsDao.getGoodsInformation=function(prod_id,cb){
 
     var sql = "select prod_name,prod_desc,prod_images,prod_origin,prod_flag,prod_categoryids,prod_categorynames" +
-        ",prod_status,prod_detail,prod_price from products where prod_id =  " + prod_id;
+        ",prod_status,prod_detail,prod_price,prod_weight from products where prod_id =  " + prod_id;
 
     sqlClient.query(sql,null, function(err, result){
         if(err){
@@ -86,10 +86,10 @@ goodsDao.getGoodsCount = function (key,data,cb) {
 goodsDao.addGoods = function (data,cb) {
 
     var sql = "insert into products(prod_name,prod_desc,prod_images,prod_origin,prod_flag,prod_categoryids,prod_categorynames" +
-        ",prod_status,prod_detail,prod_price,prod_createtime) values(?,?,?,?,1,?,?,4,?,?,?)";
+        ",prod_status,prod_detail,prod_price,prod_weight,prod_createtime) values(?,?,?,?,1,?,?,4,?,?,?,?)";
 
     sqlClient.query(sql,[data.prod_name,data.prod_desc,data.prod_images,data.prod_origin,data.prod_categoryids,
-        data.prod_categorynames,data.prod_detail,data.prod_price,moment().format('YYYY-MM-DD HH:mm:ss')], function(err, result){
+        data.prod_categorynames,data.prod_detail,data.prod_price,data.prod_weight,moment().format('YYYY-MM-DD HH:mm:ss')], function(err, result){
         if(err){
             return cb(err, null);
         }
@@ -127,10 +127,10 @@ goodsDao.create = function (file, cb) {
 goodsDao.updateGoods=function(data,cb){
 
     var sql = "update products set prod_name=?,prod_desc=?,prod_images=?,prod_origin=?,prod_categoryids=?," +
-        "prod_categorynames=?,prod_detail=?,prod_price=?,prod_updatetime=? where prod_id=?";
+        "prod_categorynames=?,prod_detail=?,prod_price=?,prod_weight=?,prod_updatetime=? where prod_id=?";
 
     sqlClient.query(sql,[data.prod_name,data.prod_desc,data.prod_images,data.prod_origin,data.prod_categoryids,
-        data.prod_categorynames,data.prod_detail,data.prod_price,moment().format('YYYY-MM-DD HH:mm:ss'),data.prod_id], function(err, result){
+        data.prod_categorynames,data.prod_detail,data.prod_weight,data.prod_price,moment().format('YYYY-MM-DD HH:mm:ss'),data.prod_id], function(err, result){
         if(err){
             return cb(err, null);
         }
