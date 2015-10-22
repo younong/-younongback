@@ -77,6 +77,7 @@ require([
         'appCarousel/carouselController',
         'appCarousel/othersService',
         'appSince/sinceController',
+        'appDelivery/deliveryController',
         'datepicker-locale',
         'datepicker',
         'datepicker-locale',

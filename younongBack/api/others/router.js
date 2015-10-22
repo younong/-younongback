@@ -19,7 +19,6 @@ function updateCarousel (req,res){
 }
 
 //获取首页轮播图片
-
 function getCarousel(req,res){
     othersDao.getCarouselImages(function(err,data){
             if(err){
@@ -30,10 +29,41 @@ function getCarousel(req,res){
     );
 }
 
+//获取运费
+function getDelivery(req,res){
+
+    othersDao.getDelivery(function(err,data){
+            if(err){
+                return res.json(500,err);
+            }
+            return res.json(200, data);
+        }
+    );
+}
+
+//修改运费
+
+function updateDelivery(req,res){
+
+    var delivery = req.body;
+
+    othersDao.updateDelivery(delivery,function(err,data){
+            if(err){
+                return res.json(500,err);
+            }
+            return res.json(200, data);
+        }
+    );
+
+}
 
 
-router.post("/updateCarousel",updateCarousel);
-router.get("/getCarousel",getCarousel);
+
+router.post("/updateCarousel",updateCarousel);//修改轮播图片
+router.get("/getCarousel",getCarousel);//获取轮播图片
+
+router.get("/getDelivery",getDelivery);//获取运费
+router.post("/updateDelivery",updateDelivery);//修改运费
 
 
 module.exports = router;

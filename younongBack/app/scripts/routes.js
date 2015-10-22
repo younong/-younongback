@@ -159,6 +159,20 @@ define(['app'], function (app) {
                         }
                     }
                 })
+                .state("home.delivery", {
+                    url: "/delivery",
+                    views: {
+                        '': {
+                            templateUrl: 'views/tplDelivery/home.delivery.html',
+                            controller: 'DeliveryCtrl'
+                        }, 'sidebar': {
+                            templateUrl: 'views/common/sidebar.html'
+                        },
+                        'footer': {
+                            templateUrl: 'views/common/footer.html'
+                        }
+                    }
+                })
         }
     ]);
 });
