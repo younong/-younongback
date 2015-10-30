@@ -1,7 +1,7 @@
 {
-    "server": "120.131.66.174",
-    "userName": "cartdbuser",
-    "password": "cart@2014",
+    "server": "120.131.70.188",
+    "userName": "root",
+    "password": "pass99",
     "options": {
         "debug": {
             "packet": true,
@@ -10,7 +10,7 @@
             "token": false,
             "log": true
         },
-        "database": "yonong",
+        "database": "younong",
         "rowCollectionOnRequestCompletion":true
     }
 }

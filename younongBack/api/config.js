@@ -14,14 +14,16 @@ var server = {
 
 config.mysql = {
 	port: process.env.MYSQL_PORT || 3306,
-	host: process.env.MYSQL_HOST || "120.131.66.174",
+	host: process.env.MYSQL_HOST || "120.131.70.188",
 	// host: process.env.MYSQL_HOST || "127.0.0.1",
-	user: "cartdbuser",
+	user: "root",
 	// user: "root",
-	password: "cart@2014",
+	password: "pass99",
 	// password: "",
-	database: "yonong"
+	database: "younong"
 };
+
+
 
 config.mysql.poolSize = 10;
 config.mysql.timeout = 30000;
