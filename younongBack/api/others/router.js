@@ -45,7 +45,7 @@ function getDelivery(req,res){
 
 function updateDelivery(req,res){
 
-    var delivery = req.body;
+    var delivery = req.body.data;
 
     othersDao.updateDelivery(delivery,function(err,data){
             if(err){

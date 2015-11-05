@@ -55,7 +55,8 @@ othersModel.getDelivery=function(cb){
 
 othersModel.updateDelivery=function(delivery,cb){
 
-    var sql = "update attribute set attr_value = ? where attr_id=5";
+    var sql = "update attribute set attr_value = ? where attr_id = 5";
+    console.log(sql);
     sqlClient.query(sql,delivery, function(err, result){
         if(err){
             return cb(err, null);
