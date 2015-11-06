@@ -173,6 +173,20 @@ define(['app'], function (app) {
                         }
                     }
                 })
+                .state("home.misdelivery", {
+                    url: "/misdelivery",
+                    views: {
+                        '': {
+                            templateUrl: 'views/tplDelivery/home.delivery.html',
+                            controller: 'MisDeliveryCtrl'
+                        }, 'sidebar': {
+                            templateUrl: 'views/common/sidebar.html'
+                        },
+                        'footer': {
+                            templateUrl: 'views/common/footer.html'
+                        }
+                    }
+                })
         }
     ]);
 });

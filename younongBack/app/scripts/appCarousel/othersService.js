@@ -48,6 +48,24 @@ define(['common/services'],
                     }).error(function(err){
                         cb(err,null)
                     })
+                },
+                /**
+                 * @desc 获取运费
+                 */
+                getMisDelivery:function(cb){
+                    $http.get('/api/others/getMisDelivery').success(function(data){
+                        cb(null,data)
+                    }).error(function(err){
+                        cb(err,null)
+                    })
+                },
+                updateMisDelivery:function(delivery,cb){
+                    $http.post('/api/others/updateMisDelivery',delivery).success(function(data){
+                        cb(null,data);
+
+                    }).error(function(err){
+                        cb(err,null)
+                    })
                 }
 
 

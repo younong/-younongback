@@ -1,10 +1,13 @@
 /**
+ * Created by wei on 15/11/6.
+ */
+/**
  * Created by wei on 15/10/22.
  */
 define(['common/controllers', 'domReady'],
     function (controllers, domReady) {
-        controllers.controller('DeliveryCtrl',function ($scope,others) {
-            others.getDelivery(function(err,data){
+        controllers.controller('MisDeliveryCtrl',function ($scope,others) {
+            others.getMisDelivery(function(err,data){
                 if(err){
                     alert('获取运费信息出错');
                 }else{
@@ -36,7 +39,7 @@ define(['common/controllers', 'domReady'],
                 }
                 var str= JSON.stringify(data);
                 var json={data:str}
-                others.updateDelivery(json,function(err,data){
+                others.updateMisDelivery(json,function(err,data){
                     if(err){
                         alert('操作出错');
                         cb();
@@ -48,36 +51,36 @@ define(['common/controllers', 'domReady'],
             }
 
 
-           $scope.update=function(){
-               var lock=false;
+            $scope.update=function(){
+                var lock=false;
 
-               if(parseInt($scope.startNumber)<0){
-                       alert('起始值不能小于0');
-                       return;
-               }
+                if(parseInt($scope.startNumber)<0){
+                    alert('起始值不能小于0');
+                    return;
+                }
 
-               if(parseInt($scope.finishNumber) < parseInt($scope.startNumber)){
-                   alert('终值不能小于起始值');
-                   return;
-               }
+                if(parseInt($scope.finishNumber) < parseInt($scope.startNumber)){
+                    alert('终值不能小于起始值');
+                    return;
+                }
 
 
-               for(var k in $scope.valueArr){
-                   if((k!=defalutIndex)&&($scope.valueArr[k] == $scope.deliveryValue)){
-                       lock=true;
-                   }
-               }
-               if(lock){
-                   alert(' 不同重量范围不允许出现同样的运费');
-                   return;
-               }
+                for(var k in $scope.valueArr){
+                    if((k!=defalutIndex)&&($scope.valueArr[k] == $scope.deliveryValue)){
+                        lock=true;
+                    }
+                }
+                if(lock){
+                    alert(' 不同重量范围不允许出现同样的运费');
+                    return;
+                }
 
-               $scope.keyArr[defalutIndex] = $scope.startNumber;
-               $scope.keyArr[defalutIndex+1] = $scope.finishNumber;
-               $scope.valueArr[defalutIndex] =$scope.deliveryValue;
+                $scope.keyArr[defalutIndex] = $scope.startNumber;
+                $scope.keyArr[defalutIndex+1] = $scope.finishNumber;
+                $scope.valueArr[defalutIndex] =$scope.deliveryValue;
 
-               updateDeli($scope.keyArr,$scope.valueArr);
-           }
+                updateDeli($scope.keyArr,$scope.valueArr);
+            }
 
             $scope.delConfirm=function(index){
 

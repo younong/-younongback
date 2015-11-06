@@ -74,6 +74,7 @@ require([
     'appOrder/orderController',
     'appAddress/addressServices',
     'appAddress/addressController',
+        'appMisDelivery/misDeliveryController',
         'appCarousel/carouselController',
         'appCarousel/othersService',
         'appSince/sinceController',

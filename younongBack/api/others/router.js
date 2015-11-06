@@ -58,12 +58,44 @@ function updateDelivery(req,res){
 }
 
 
+//获取运费减免规则
+function getMisDelivery(req,res){
+
+    othersDao.getMisDelivery(function(err,data){
+            if(err){
+                return res.json(500,err);
+            }
+            return res.json(200, data);
+        }
+    );
+}
+
+//修改运费减免规则
+
+function updateMisDelivery(req,res){
+
+    var delivery = req.body.data;
+
+    othersDao.updateMisDelivery(delivery,function(err,data){
+            if(err){
+                return res.json(500,err);
+            }
+            return res.json(200, data);
+        }
+    );
+
+}
+
+
 
 router.post("/updateCarousel",updateCarousel);//修改轮播图片
 router.get("/getCarousel",getCarousel);//获取轮播图片
 
 router.get("/getDelivery",getDelivery);//获取运费
 router.post("/updateDelivery",updateDelivery);//修改运费
+
+router.get("/getMisDelivery",getMisDelivery);//获取运费减免规则
+router.post("/updateMisDelivery",updateMisDelivery);//修改运费减免规则
 
 
 module.exports = router;

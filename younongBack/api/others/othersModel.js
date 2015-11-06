@@ -67,3 +67,38 @@ othersModel.updateDelivery=function(delivery,cb){
 }
 
 
+
+//获取运费减免
+
+othersModel.getMisDelivery=function(cb){
+
+    var sql = "select attr_value from attribute where attr_id=6";
+    sqlClient.query(sql,null, function(err, result){
+        if(err){
+            return cb(err, null);
+        }
+        return cb(null,result);
+    });
+
+}
+
+
+
+
+//修改运费减免
+
+othersModel.updateMisDelivery=function(delivery,cb){
+
+    var sql = "update attribute set attr_value = ? where attr_id = 6";
+    console.log(sql);
+    sqlClient.query(sql,delivery, function(err, result){
+        if(err){
+            return cb(err, null);
+        }
+        return cb(null,result);
+    });
+
+}
+
+
+
