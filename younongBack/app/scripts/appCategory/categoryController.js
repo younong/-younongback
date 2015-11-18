@@ -47,5 +47,48 @@ define(['common/controllers', 'domReady'],
         			console.log("删除失败");
         		}
         	}
+
+
+
+
+
+            var json={
+                category_name:'',
+                categories_id:''
+            };
+            var indexId=0;
+
+            $scope.editor=function(index){
+
+                indexId=index;
+
+                json.category_name=$scope.catesObj.data[index].category_name;
+                json.categories_id=$scope.catesObj.data[index].categories_id;
+
+                $scope.chgName=$scope.catesObj.data[index].category_name;
+                jQuery("#chgCateModal").modal();
+
+
+            }
+
+            $scope.chgCate=function(){
+
+                json.category_name=$scope.chgName;
+
+
+                CategoryService.chgCate(json,function(err,data){
+
+                    if(err){
+                        alert('修改失败');
+                    }else{
+                        $scope.catesObj.data[indexId].category_name=json.category_name;
+                        jQuery('#chgCateModal').modal('hide');
+                    }
+
+                })
+            }
+
+
+
         });
     });

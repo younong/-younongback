@@ -43,6 +43,18 @@ define(['common/services'],
 	        		})
 	        	},
 
+                /**
+                 * @desc 修改分类信息
+                 */
+                chgCate:function(data,cb){
+                    console.log(data);
+                    $http.post('/api/categories/chgCate',data).success(function(data){
+                      cb(null,data)
+                    }).error(function(err){
+                        cb(err,null)
+                    })
+                },
+
 	        	/**
 				 * @desc 删除分类信息
 	        	 */

@@ -51,7 +51,8 @@ function deleteCate(req, res){
  * @func findCates
  * @param {object} req http请求对象
  * @param {object} res http响应对象
- */ 
+ */
+
 function findCates(req, res){
 	cateDao.find(function(err, data){
 		if (!!err) {
@@ -63,41 +64,31 @@ function findCates(req, res){
 }
 
 
-// function login(req, res) {
-//     console.log("============> login");
-//     var username = req.body.username || '';
-//     var password = req.body.password || '';
-//     console.log("============> username   " + username);
+/**
+ * @desc 修改品类
+ * @func chgCate
+ * @param {object} req http请求对象
+ * @param {object} res http响应对象
+ */
+
+function chgCate(req,res){
+    var data = req.body;
+    console.log(data);
+    cateDao.chgCate(data,function(err, data){
+        if (!!err) {
+            console.log(err);
+            return res.json(500, {error: err});
+        }
+        return res.json(200, {result: data});
+    })
+
+}
 
 
-//     if (username === '' || password === '') {
-//         return res.send(400);
-//     }
-//     // 用户名&密码 登录
-//     userDao.findByUsername(username, function (err, user) {
-//         checkUser(req, res, err, user);
-//     });
-// }
 
-// // 登录检查
-// function checkUser(req, res, err, data) {
-//     if (!!err) {
-//         console.log(err);
-//         return res.json(500, {error: err});
-//     }
-//     if (!data || data.length == 0) {
-//         return res.json(400, {error: "用户不存在"});
-//     }
-//     var pwd = data[0].user_passwd || '';
-//     if (pwd === '' || pwd != req.body.password) {
-//         return res.json(400, {error: "用户名密码不匹配"});
-//     }
-//     return res.json(200, {result: data[0]});
-// }
-
-// router.post("/login", login); // 登录
 router.get("/add",addCate);
 router.get("/delete",deleteCate);
 router.get("/find",findCates);
+router.post("/chgCate",chgCate);
 
 module.exports = router;

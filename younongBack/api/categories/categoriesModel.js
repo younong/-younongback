@@ -3,23 +3,7 @@ var utils = require('../lib/utils');
 var categories = module.exports;
 
 
-// /**
-//  * example
-//  * @param code
-//  * @param cb
-//  */
-// categories.findByUsername = function (username, cb) {
-//     if(!username){
-//         return cb("用户名不能为空");
-//     }
-//     var sql = "select * from users where user_name = ?";
-//     SqlClient.query(sql, username, function(err, data){
-//         if(err){
-//             return cb(err, null);
-//         }
-//         return cb(null, data);
-//     });
-// };
+
 
 /**
  * @desc 查询所有品种元素
@@ -69,4 +53,24 @@ categories.add = function(cname, cb){
         }
         return cb&&cb(null, data);
     })
+}
+
+/**
+ * @desc 修改一个品类
+ * @func chgCate
+ * @param {json} data 种类名和id
+ * @param {function} cb
+ */
+
+
+categories.chgCate=function(data,cb){
+
+    var sql = "update categories set category_name = ? where categories_id = ?";
+    SqlClient.query(sql, [data.category_name,data.categories_id], function(err, data){
+        if(err){
+            return  cb&&cb(err, null);
+        }
+        return cb&&cb(null, data);
+    })
+
 }
