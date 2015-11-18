@@ -296,6 +296,7 @@ define(['common/controllers', 'appProduct/productServices', 'domReady', 'wysiwyg
                         });
                     }else{
                         $scope.productForm.prod_detail = $('#editor').html();
+                        console.log($scope.productForm);
                         ProductService.updateProduct($scope.productForm, function (error, data) {
                             if (error) {
                                 alert('修改商品失败'+error);

@@ -130,7 +130,7 @@ goodsDao.updateGoods=function(data,cb){
         "prod_categorynames=?,prod_detail=?,prod_price=?,prod_weight=?,prod_updatetime=? where prod_id=?";
 
     sqlClient.query(sql,[data.prod_name,data.prod_desc,data.prod_images,data.prod_origin,data.prod_categoryids,
-        data.prod_categorynames,data.prod_detail,data.prod_weight,data.prod_price,moment().format('YYYY-MM-DD HH:mm:ss'),data.prod_id], function(err, result){
+        data.prod_categorynames,data.prod_detail,data.prod_price,data.prod_weight,moment().format('YYYY-MM-DD HH:mm:ss'),data.prod_id], function(err, result){
         if(err){
             return cb(err, null);
         }
