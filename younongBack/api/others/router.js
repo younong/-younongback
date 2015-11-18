@@ -115,6 +115,31 @@ function updateDeliveryTime(req,res){
 
 }
 
+//获取运费规则描述
+function getDeliveryRule(req,res){
+    othersDao.getDeliveryRule(function(err,data){
+            if(err){
+                return res.json(500,err);
+            }
+            return res.json(200, data);
+        }
+    );
+}
+
+
+//修改运费规则描述
+function updateDeliveryRule(req,res){
+    var deliveryRule = req.body.data;
+    othersDao.updateDeliveryRule(deliveryRule,function(err,data){
+            if(err){
+                return res.json(500,err);
+            }
+            return res.json(200, data);
+        }
+    );
+}
+
+
 router.post("/updateCarousel",updateCarousel);//修改轮播图片
 router.get("/getCarousel",getCarousel);//获取轮播图片
 
@@ -126,6 +151,9 @@ router.post("/updateMisDelivery",updateMisDelivery);//修改运费减免规则
 
 router.get("/getDeliveryTime",getDeliveryTime);//获取运费时间
 router.post("/updateDeliveryTime",updateDeliveryTime);//修改运费时间
+
+router.get("/getDeliveryRule",getDeliveryRule);//获取运费规则描述
+router.post("/updateDeliveryRule",updateDeliveryRule);//修改运费规则描述
 
 
 

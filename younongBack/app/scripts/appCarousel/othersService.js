@@ -68,7 +68,7 @@ define(['common/services'],
                     })
                 },
                 /**
-                 * @desc 获取运费时间
+                 * @desc 获取配送时间
                  */
                 getDeliveryTime:function(cb){
                     $http.get('/api/others/getDeliveryTime').success(function(data){
@@ -84,11 +84,25 @@ define(['common/services'],
                     }).error(function(err){
                         cb(err,null)
                     })
+                },
+                /**
+                 * @desc 获取运费规则描述
+                 */
+                getDeliveryRule:function(cb){
+                    $http.get('/api/others/getDeliveryRule').success(function(data){
+                        cb(null,data)
+                    }).error(function(err){
+                        cb(err,null)
+                    })
+                },
+                updateDeliveryRule:function(deliveryRule,cb){
+                    $http.post('/api/others/updateDeliveryRule',deliveryRule).success(function(data){
+                        cb(null,data);
+
+                    }).error(function(err){
+                        cb(err,null)
+                    })
                 }
-
-
-
-
             }
         });
     });

@@ -80,7 +80,7 @@ define(['common/controllers', 'domReady'],
             $scope.chgCate=function(){
                 $scope.valueArr[id]=$scope.chgName;
                 updateDeliTime($scope.keyArr,$scope.valueArr,function(){
-                  
+
                 });
 
             }

@@ -122,7 +122,6 @@ othersModel.getDeliveryTime=function(cb){
 othersModel.updateDeliveryTime=function(delivery,cb){
 
     var sql = "update attribute set attr_value = ? where attr_id = 1";
-    console.log(sql);
     sqlClient.query(sql,delivery, function(err, result){
         if(err){
             return cb(err, null);
@@ -131,5 +130,40 @@ othersModel.updateDeliveryTime=function(delivery,cb){
     });
 
 }
+
+
+
+//获取运费规则描述
+
+othersModel.getDeliveryRule=function(cb){
+
+    var sql = "select attr_value from attribute where attr_id=8";
+    sqlClient.query(sql,null, function(err, result){
+        if(err){
+            return cb(err, null);
+        }
+        return cb(null,result);
+    });
+
+}
+
+
+
+
+
+//修改运费规则描述
+
+othersModel.updateDeliveryRule=function(deliveryRule,cb){
+
+    var sql = "update attribute set attr_value = ? where attr_id = 8";
+    sqlClient.query(sql,deliveryRule, function(err, result){
+        if(err){
+            return cb(err, null);
+        }
+        return cb(null,result);
+    });
+
+}
+
 
 

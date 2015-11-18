@@ -18,6 +18,31 @@ define(['common/controllers', 'domReady'],
                 }
             })
 
+            others.getDeliveryRule(function(err,data){
+                if(err){
+                    alert('获取运费描述出错');
+                }else{
+                  $scope.deliverDes=data[0].attr_value;
+                }
+            })
+
+            $scope.chgRule=function(){
+                $scope.deliverDescribe=$scope.deliverDes;
+                $('#ruleModal').modal();
+            }
+
+            $scope.ruleSave=function(){
+                others.updateDeliveryRule({data:$scope.deliverDescribe},function(err,data){
+                    if(err){
+                        alert('操作出错');
+                    }else{
+                        jQuery('#ruleModal').modal('hide');
+                        $scope.deliverDes=$scope.deliverDescribe;
+                    }
+                });
+            }
+
+
             var defalutIndex=0;
 
             $scope.editor=function(index){

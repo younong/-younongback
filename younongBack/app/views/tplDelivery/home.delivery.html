@@ -67,6 +67,16 @@
                             </table>
                         </div>
                     </div>
+
+                    <div style="margin-left:10px;margin-bottom: 10px;text-align: center">
+                        <div style="float: left">运费规则描述：</div>
+                        <div style="text-align: left">{{deliverDes}}</div>
+
+                        <button class="btn btn-primary" style="margin:0 auto" ng-click="chgRule()">修改</button>
+                    </div>
+
+
+
                 </div>
                 <!-- END EXAMPLE TABLE PORTLET-->
             </div>
@@ -137,6 +147,25 @@
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
                 <button type="button" class="btn btn-primary" ng-click="save()">保存</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade" id="ruleModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"></button>
+                <h4 class="modal-title">修改运费规则描述</h4>
+            </div>
+            <div class="modal-body">
+                <textarea value="deliverDescribe" ng-model="deliverDescribe" style="width: 98%;height: 100px"></textarea>
+
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary" ng-click="ruleSave()">保存</button>
             </div>
         </div>
     </div>
