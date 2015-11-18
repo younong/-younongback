@@ -187,6 +187,20 @@ define(['app'], function (app) {
                         }
                     }
                 })
+                .state("home.deliveryTime", {
+                    url: "/deliveryTime",
+                    views: {
+                        '': {
+                            templateUrl: 'views/tplDeliveryTime/home.deliveryTime.html',
+                            controller: 'DeliveryTimeCtrl'
+                        }, 'sidebar': {
+                            templateUrl: 'views/common/sidebar.html'
+                        },
+                        'footer': {
+                            templateUrl: 'views/common/footer.html'
+                        }
+                    }
+                })
         }
     ]);
 });

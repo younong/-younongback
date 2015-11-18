@@ -50,7 +50,7 @@ define(['common/services'],
                     })
                 },
                 /**
-                 * @desc 获取运费
+                 * @desc 获取运费减免
                  */
                 getMisDelivery:function(cb){
                     $http.get('/api/others/getMisDelivery').success(function(data){
@@ -66,8 +66,25 @@ define(['common/services'],
                     }).error(function(err){
                         cb(err,null)
                     })
-                }
+                },
+                /**
+                 * @desc 获取运费时间
+                 */
+                getDeliveryTime:function(cb){
+                    $http.get('/api/others/getDeliveryTime').success(function(data){
+                        cb(null,data)
+                    }).error(function(err){
+                        cb(err,null)
+                    })
+                },
+                updateDeliveryTime:function(delivery,cb){
+                    $http.post('/api/others/updateDeliveryTime',delivery).success(function(data){
+                        cb(null,data);
 
+                    }).error(function(err){
+                        cb(err,null)
+                    })
+                }
 
 
 
