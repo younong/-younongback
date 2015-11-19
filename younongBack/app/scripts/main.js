@@ -1,7 +1,7 @@
 // the app/scripts/main.js file, which defines our RequireJS config
 require.config({
     paths: {
-        'jquery': 'lib/bower_components/jquery/dist/jquery',
+        'jquery': 'lib/bower_components/jquery/dist/jquery.min',
         'angular': 'lib/bower_components/angular/angular.min',
         'angular-ui-router': 'lib/bower_components/angular-ui-router/release/angular-ui-router.min',
         'domReady': 'lib/domReady',

@@ -86,11 +86,13 @@ goodsDao.getGoodsCount = function (key,data,cb) {
 goodsDao.addGoods = function (data,cb) {
 
     var sql = "insert into products(prod_name,prod_desc,prod_images,prod_origin,prod_flag,prod_categoryids,prod_categorynames" +
-        ",prod_status,prod_detail,prod_price,prod_weight,prod_createtime,prod_updatetime) values(?,?,?,?,1,?,?,4,?,?,?,?)";
+        ",prod_status,prod_detail,prod_price,prod_weight,prod_createtime,prod_updatetime) values(?,?,?,?,1,?,?,4,?,?,?,?,?)";
+    console.log(sql);
 
     sqlClient.query(sql,[data.prod_name,data.prod_desc,data.prod_images,data.prod_origin,data.prod_categoryids,
         data.prod_categorynames,data.prod_detail,data.prod_price,data.prod_weight,moment().format('YYYY-MM-DD HH:mm:ss'),moment().format('YYYY-MM-DD HH:mm:ss')], function(err, result){
         if(err){
+            console.log(err);
             return cb(err, null);
         }
 

@@ -38,6 +38,7 @@ function addGoods(req,res){
     console.log(goods);
     goodsDao.addGoods(goods,function(err,data){
             if(err){
+                console.log(err);
                 return res.json(500,err);
             }
             return res.json(200, data);
