@@ -283,7 +283,7 @@ define(['common/controllers', 'appProduct/productServices', 'domReady', 'wysiwyg
                         return;
                     }
 
-                    var imgName= $scope.covers[0].name;
+                    if($scope.covers.length!=0)var imgName= $scope.covers[0].name;
 
                     if ($scope.covers.length!=0) {
                         var uploadCover = function (cb) {
