@@ -118,6 +118,7 @@ goodsDao.create = function (file, cb) {
 //        return cb(null, {path:Config.url_prefix+file.name, id:data.insertId});
 //
 //    })
+    console.log(file);
     return cb(null, {path:Config.url_prefix+file.name});
 
 };

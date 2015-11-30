@@ -47,7 +47,7 @@ define(['common/controllers', 'appProduct/productServices', 'domReady', 'wysiwyg
                         if(err){
                             alert('删除失败')
                         }else{
-                            $scope.products.results.splice(index);
+                            $scope.products.results.splice(index,1);
                         }
                     })
                 }
@@ -67,8 +67,8 @@ define(['common/controllers', 'appProduct/productServices', 'domReady', 'wysiwyg
             }
         ]);
 
-        controllers.controller('ProductCreateCtrl', ['$scope', 'ProductService','Upload','$state','CategoryService',
-            function ($scope, ProductService,Upload,$state,CategoryService) {
+        controllers.controller('ProductCreateCtrl', ['$scope', 'ProductService','Upload','$state','CategoryService','Util',
+            function ($scope, ProductService,Upload,$state,CategoryService,Util) {
                 $scope.pageTitle = '新增商品';
                 $scope.subPageTitle = '新增';
                 $scope.covers = [];
@@ -146,9 +146,12 @@ define(['common/controllers', 'appProduct/productServices', 'domReady', 'wysiwyg
                         return;
                     }
 
+                   var imgName= $scope.covers[0].name;
                     var uploadCover = function (cb) {
+
                         Upload.upload({
                             url: '/api/goods/upload',
+                            fileName: imgName,
                             file: $scope.covers[0]
                         }).success(function (data, status, headers, config) {
                             console.log(data);
@@ -156,24 +159,33 @@ define(['common/controllers', 'appProduct/productServices', 'domReady', 'wysiwyg
 
                         });
                     };
-                    uploadCover(function (data) {
-                        $scope.productForm.prod_images = data.path;
-                        $scope.productForm.prod_detail = $('#editor').html();
-                        ProductService.addGoods($scope.productForm, function (error, data) {
-                            if (error) {
-                                alert('新增商品失败'+error);
-                                return;
-                            }
-                            $state.go('home.product', {page: 1});
+
+                    Util.resizeFile($scope.covers[0]).then(function(blob_data){
+
+                        $scope.covers[0]=blob_data;
+                        uploadCover(function (data) {
+                            $scope.productForm.prod_images = data.path;
+                            $scope.productForm.prod_detail = $('#editor').html();
+                            ProductService.addGoods($scope.productForm, function (error, data) {
+                                if (error) {
+                                    alert('新增商品失败'+error);
+                                    return;
+                                }
+                                $state.go('home.product', {page: 1});
+                            });
                         });
-                    });
+
+                    })
+
+
+
                 }
             }
         ]);
 
 
-        controllers.controller('ProductDetailCtrl', ['$scope', 'ProductService','Upload','$stateParams','$state','CategoryService',
-            function ($scope, ProductService,Upload,$stateParams,$state,CategoryService) {
+        controllers.controller('ProductDetailCtrl', ['$scope', 'ProductService','Upload','$stateParams','$state','CategoryService','Util',
+            function ($scope, ProductService,Upload,$stateParams,$state,CategoryService,Util) {
                 $scope.pageTitle = '商品详情';
                 $scope.subPageTitle = '商品详情';
                 $scope.covers = [];
@@ -271,29 +283,39 @@ define(['common/controllers', 'appProduct/productServices', 'domReady', 'wysiwyg
                         return;
                     }
 
+                    var imgName= $scope.covers[0].name;
 
                     if ($scope.covers.length!=0) {
                         var uploadCover = function (cb) {
                             Upload.upload({
                                 url:'/api/goods/upload',
+                                fileName: imgName,
                                 file: $scope.covers[0]
                             }).success(function (data, status, headers, config) {
                                 console.log(data);
                                 cb(data);
                             });
                         };
-                        uploadCover(function (data) {
-                            $scope.productForm.prod_images = data.path;
-                            $scope.productForm.prod_detail = $('#editor').html();
-                            console.log($scope.productForm);
-                            ProductService.updateProduct($scope.productForm, function (error, data) {
-                                if (error) {
-                                    alert('修改商品失败'+error);
-                                    return;
-                                }
-                                $state.go('home.product', {page: 1});
+
+                        Util.resizeFile($scope.covers[0]).then(function(blob_data){
+                            $scope.covers[0]=blob_data;
+                            uploadCover(function (data) {
+                                $scope.productForm.prod_images = data.path;
+                                $scope.productForm.prod_detail = $('#editor').html();
+                                console.log($scope.productForm);
+                                ProductService.updateProduct($scope.productForm, function (error, data) {
+                                    if (error) {
+                                        alert('修改商品失败'+error);
+                                        return;
+                                    }
+                                    $state.go('home.product', {page: 1});
+                                });
                             });
-                        });
+
+
+                        })
+
+
                     }else{
                         $scope.productForm.prod_detail = $('#editor').html();
                         console.log($scope.productForm);

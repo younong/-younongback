@@ -4,8 +4,8 @@
 
 define(['common/controllers','appCarousel/othersService','config'],
     function (controllers,others, SiteConfig) {
-        controllers.controller('CarouselCtrl', ['$scope','others','Upload',
-            function ($scope,others,Upload) {
+        controllers.controller('CarouselCtrl', ['$scope','others','Upload','Util',
+            function ($scope,others,Upload,Util) {
 
                 $scope.images=[];
                 $scope.update=[];
@@ -37,15 +37,19 @@ define(['common/controllers','appCarousel/othersService','config'],
                         $('#notifyModal').modal();
                         return;
                     }
-                    var uploadCover = function (imageData,cb) {
-                        Upload.upload({
-                            url: '/api/goods/upload',
-                            file: imageData
-                        }).success(function (data, status, headers, config) {
-                            console.log(data);
-                            cb(data.path);
 
-                        });
+                    var uploadCover = function (imageData,cb) {
+
+                        Util.resizeFile(imageData).then(function(blob_data){
+                            Upload.upload({
+                                url: '/api/goods/upload',
+                                fileName: imageData.name,
+                                file: blob_data
+                            }).success(function (data, status, headers, config) {
+                                console.log(data);
+                                cb(data.path);
+                            });
+                            });
                     };
                     var imagesUrl='';
 
