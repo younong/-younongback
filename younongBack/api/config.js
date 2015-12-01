@@ -20,7 +20,7 @@ config.mysql = {
 	// user: "root",
 	password: "pass99",
 	// password: "",
-	database: "younong"
+	database: "younongProduct"
 };
 
 
