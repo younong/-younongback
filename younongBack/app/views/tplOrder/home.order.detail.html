@@ -90,10 +90,10 @@
                                     </tr>
                                     </thead>
                                     <tr ng-repeat='item in order.items'>
-                                        <td style="text-align: center;"><img ng-src="{{item.prod_images | smallImg}}" style="height: 80px;width: 80px;"></td>
+                                        <td style="text-align: center;"><img ng-src="{{item.prod_images}}" style="height: 80px;width: 80px;"></td>
                                         <td style="text-align: center;vertical-align: middle;">{{item.prod_name}}</td>
                                         <td style="text-align: center;vertical-align: middle;">{{item.prod_desc}}</td>
-                                        <td style="text-align: center;vertical-align: middle;">￥{{item.prod_sku_price}}</td>
+                                        <td style="text-align: center;vertical-align: middle;">￥{{item.prod_price}}</td>
                                         <td style="text-align: center;vertical-align: middle;">{{item.product_quantity}}</td>
                                     </tr>
                                 </table>

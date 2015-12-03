@@ -29,8 +29,12 @@ define(['common/controllers', 'appOrder/orderServices', 'moment', 'domReady', 'c
             	params.page = $scope.currentPage;
             	params.size = $scope.pageSize;
                 OrderServices.getOrders(params,function(err, data){
+                    console.log(data);
                     $scope.count = data.counts;
                     $scope.orders = data.results;
+                    for(var i in $scope.orders){
+                        $scope.orders[i].orderMoney=$scope.orders[i].order_total-$scope.orders[i].deliver_charges;
+                    }
                     $scope.numPages = data.counts>0?Math.ceil(data.counts / $scope.pageSize):1;
                     $scope.pageStart = data.counts>0?($scope.currentPage - 1) * $scope.pageSize + 1:0;
                     $scope.pageEnd = $scope.pageSize * $scope.currentPage > data.counts ? data.counts : $scope.currentPage * $scope.pageSize;
@@ -114,10 +118,10 @@ define(['common/controllers', 'appOrder/orderServices', 'moment', 'domReady', 'c
                 for(var index in $scope.orders){
                     var order = $scope.orders[index];
                     if(order.checked){
-                        if(order.order_status_id === 2 || order.order_status_id === 10){
-                            // 如果当前状态为已付款未发货，或者电话确认ok
-                            orderids.push(order.order_id);
-                        }
+                        //if(order.order_status_id === 2 || order.order_status_id === 10){
+                        //    // 如果当前状态为已付款未发货，或者电话确认ok
+                        //    orderids.push(order.order_id);
+                        //}
                     }
                 }
                 if(orderids.length === 0){
@@ -177,9 +181,9 @@ define(['common/controllers', 'appOrder/orderServices', 'moment', 'domReady', 'c
             })
 
         })
-        controllers.filter('smallImg',function(){
-            return function(input){
-                return JSON.parse(input).small;
-            }
-        })
+        //controllers.filter('smallImg',function(){
+        //    return function(input){
+        //        return JSON.parse(input).small;
+        //    }
+        //})
     });

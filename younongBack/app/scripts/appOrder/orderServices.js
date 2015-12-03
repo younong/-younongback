@@ -57,6 +57,7 @@ define(['common/services'],
                             orderDetail.product_number = 0;
                             for(var index in orderDetail.items){
                                 var item = orderDetail.items[index];
+                                item.prod_images= imgUrl+item.prod_images;
                                 orderDetail.product_number += item.product_quantity;
                             }
                             cb(null, orderDetail);

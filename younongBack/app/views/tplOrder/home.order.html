@@ -123,6 +123,11 @@
                             <th class="sorting" role="columnheader" tabindex="0"
                                 aria-controls="sample_1" rowspan="1" colspan="1"
                                 aria-label="Points: activate to sort column ascending" style="min-width: 50px">
+                                订单金额(不含运费)
+                            </th>
+                            <th class="sorting" role="columnheader" tabindex="0"
+                                aria-controls="sample_1" rowspan="1" colspan="1"
+                                aria-label="Points: activate to sort column ascending" style="min-width: 50px">
                                 收货人
                             </th>
                             <th class="hidden-480 sorting_disabled" role="columnheader" rowspan="1" colspan="1"
@@ -156,6 +161,7 @@
                                 <input type="checkbox" class="checkboxes" ng-model="item.checked" ng-change="check(item)" style="width: 18px;height: 18px">
                             </td>
                             <td class=" "><a ui-sref="home.orderDetail({order_id:item.order_id})">{{item.order_no}}</a></td>
+                            <td class="center hidden-480 ">￥{{item.orderMoney}}</td>
                             <td class="center hidden-480 ">{{item.receiver_name}}</td>
                             <td class="center hidden-480 ">{{item.deliver_phone}}</td>
                             <td class="center hidden-480 ">{{item.deliver_address}}</td>

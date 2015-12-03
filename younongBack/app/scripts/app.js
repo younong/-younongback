@@ -1,4 +1,7 @@
 // The app/scripts/app.js file, which defines our AngularJS app
+
+var imgUrl='http://120.131.70.188:3003/';
+
 define(['angular', 'common/controllers',
     'common/services', 'common/filters', 'ng-file-upload',
     'common/directives'

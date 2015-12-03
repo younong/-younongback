@@ -23,6 +23,8 @@ orders.findByCondition = function(condition, page, size, cb){
 		'receiver_name', // 收货人姓名
 		'deliver_phone', // 收货人电话
 		'deliver_address', // 收货地址
+        'order_total',//订单总金额
+        'deliver_charges',//运费
 		'order_status.status_name', // 订单状态
 		'orders.order_status_id', // 订单状态
 		'payment_methods.payment_type', // 付款方式
@@ -159,13 +161,12 @@ orders.findOrderProducts = function(orderid, cb){
 		'products.prod_images',
 		'products.prod_name', 
 		'products.prod_desc', 
-		'product_sku.prod_sku_price', 
+		'products.prod_price',
 		'order_items.product_quantity'
 	]
 	// 拼接sql
 	sql = 'select '+fields.join(',')+' from order_items \
-			left join product_sku on order_items.prod_sku_id = product_sku.prod_sku_id \
-			left join products on products.prod_id = product_sku.prod_id \
+			left join products on order_items.prod_sku_id = products.prod_id \
 			where order_items.order_id = ?'
 	// 查询并返回结果
 	SqlClient.query(sql,[orderid],function(err, data){
